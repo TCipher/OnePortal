@@ -1,0 +1,22 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build
+bin/
+obj/
+Debug/
+Release/
+
+# Others
+*.log
+*.db
+*.sqlite
+# Application settings (do not commit secrets!)
+OnePortal.Api/appsettings.json
+OnePortal.Api/appsettings.*.json
+
+# User secrets & local configs
+*.secrets.json
+*.local.json

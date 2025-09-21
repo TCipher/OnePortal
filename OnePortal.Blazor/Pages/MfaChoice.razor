@@ -1,0 +1,9 @@
+﻿@page "/mfa/choice"
+@inject NavigationManager Nav
+@inject OnePortal.Blazor.Services.Auth.AuthService Auth
+@using OnePortal.Blazor.Components.Auth
+
+
+<h1>Choose Authentication Method</h1>
+<MfaMethodCard Title="Email 2FA" OnSelect="@(() => Nav.NavigateTo("/mfa/email"))" />
+<MfaMethodCard Title="Passwordless (WebAuthn)" OnSelect="@(() => Nav.NavigateTo("/mfa/webauthn"))" />

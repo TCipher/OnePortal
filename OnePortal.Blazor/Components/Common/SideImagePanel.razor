@@ -1,0 +1,27 @@
+﻿@namespace OnePortal.Blazor.Components.Common
+
+<div class="side-image-panel @CssClass" style="@BuildStyle()" role="img" aria-label="@Alt">
+    @if (ChildContent is not null)
+    {
+        <div class="overlay">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string ImageUrl { get; set; } = string.Empty;
+    [Parameter] public string Alt { get; set; } = string.Empty;
+    [Parameter] public string Position { get; set; } = "center";
+    [Parameter] public string MinHeight { get; set; } = "0px";
+    [Parameter] public bool Darken { get; set; } = false;
+    [Parameter] public string CssClass { get; set; } = string.Empty;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string BuildStyle()
+    {
+        var overlay = Darken ? "linear-gradient(0deg, rgba(0,0,0,.25), rgba(0,0,0,.25)), " : "";
+        return $"background-image:{overlay}url('{ImageUrl}');" +
+               $"background-size:cover;background-position:{Position};min-height:{MinHeight};";
+    }
+}

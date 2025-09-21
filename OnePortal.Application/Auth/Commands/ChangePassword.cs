@@ -6,12 +6,13 @@ using OnePortal.Domain.Entities;
 
 namespace OnePortal.Application.Auth.Commands;
 
-public record ChangePasswordCommand(string CurrentPassword, string NewPassword) : IRequest<bool>;
+public record ChangePasswordCommand(string Email, string CurrentPassword, string NewPassword) : IRequest<bool>;
 
 public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommand>
 {
     public ChangePasswordValidator()
     {
+        RuleFor(x => x.Email).NotEmpty().EmailAddress();
         RuleFor(x => x.CurrentPassword).NotEmpty();
         RuleFor(x => x.NewPassword).NotEmpty().MinimumLength(8);
     }
@@ -29,19 +30,42 @@ public class ChangePasswordHandler : IRequestHandler<ChangePasswordCommand, bool
 
     public async Task<bool> Handle(ChangePasswordCommand r, CancellationToken ct)
     {
-        var userId = _current.UserId ?? throw new UnauthorizedAccessException();
-        var user = await _users.GetByIdAsync(userId, ct);
+        //var userId = _current.UserId ?? throw new UnauthorizedAccessException();
+        var user = await _uow.Users.GetByEmailAsync(r.Email, ct);
+        //var user = await _users.GetByIdAsync(userId, ct);
+        if (user is null) return false;
 
-        if (!_pwd.Verify(user.PasswordHash, r.CurrentPassword))
-            throw new UnauthorizedAccessException("Invalid current password");
+        //if (!_pwd.Verify(user.PasswordHash, r.CurrentPassword))
+        //    throw new UnauthorizedAccessException("Invalid current password");
+        if (string.IsNullOrWhiteSpace(user.PasswordHash) || !_pwd.Verify(user.PasswordHash, r.CurrentPassword))
+        {
+            // bump lockout counters like normal invalid login
+            user.AccessFailedCount++;
+            if (user.AccessFailedCount >= 5) user.LockoutEndUtc = DateTime.UtcNow.AddMinutes(15);
+            await _uow.SaveChangesAsync(ct);
+            return false;
+        }
+
+        //user.PasswordHash = _pwd.Hash(r.NewPassword);
+        //user.PasswordLastChangedUtc = DateTime.UtcNow;
+        //user.MustChangePassword = false;
+
+        //await _users.UpdateAsync(user, ct);
+        ////await _audit.LogAsync(user.Id, "auth.password.changed", new { user.Id }, ct);
+        //await _uow.SaveChangesAsync(ct);
+        if (!user.MustChangePassword)
+            throw new InvalidOperationException("Password change not required.");
 
         user.PasswordHash = _pwd.Hash(r.NewPassword);
         user.PasswordLastChangedUtc = DateTime.UtcNow;
         user.MustChangePassword = false;
 
-        await _users.UpdateAsync(user, ct);
-        //await _audit.LogAsync(user.Id, "auth.password.changed", new { user.Id }, ct);
+        // reset lockout counters
+        user.AccessFailedCount = 0;
+        user.LockoutEndUtc = null;
+
         await _uow.SaveChangesAsync(ct);
         return true;
+        
     }
 }

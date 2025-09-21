@@ -161,7 +161,7 @@ builder.Services.AddSwaggerGen();
 // CORS for SPA (WebAuthn requires HTTPS/origin)
 // -------------------------------
 builder.Services.AddCors(o => o.AddPolicy("spa", p => p
-    .WithOrigins("https://app.oneportal.local")
+    .WithOrigins("https://app.oneportal.local", "https://localhost:7150")
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()));

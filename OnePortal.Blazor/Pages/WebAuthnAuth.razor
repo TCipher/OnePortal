@@ -1,0 +1,22 @@
+﻿@page "/mfa/webauthn"
+@inject OnePortal.Blazor.Services.Auth.AuthService Auth
+@inject OnePortal.Blazor.Services.Auth.WebAuthnClient WebAuthn
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+
+
+<h1>Passkey / WebAuthn</h1>
+<button @onclick="Go">Use Passkey</button>
+@if (!string.IsNullOrEmpty(error)) {<div class="error">@error</div>}
+
+
+@code {
+string? error;
+private async Task Go()
+{
+        var email = Auth.GetPrincipal().Identity?.Name ?? await JS.InvokeAsync<string>("localStorage.getItem", "onep.email");
+var ok = await WebAuthn.AuthenticateAsync(email ?? string.Empty);
+if (ok) Nav.NavigateTo("/dashboard", true); else error = "Passkey auth failed";
+}
+}

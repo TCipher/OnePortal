@@ -1,0 +1,10 @@
+﻿namespace OnePortal.Blazor.Components.Common
+{
+
+<span class="badge @(Valid ? "ok" : "warn")">@Message</span>
+@code {
+    [Parameter] public bool Valid { get; set; }
+    [Parameter] public string Message { get; set; } = string.Empty;
+}
+
+}

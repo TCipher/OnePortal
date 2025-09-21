@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNet.Identity;
+using Microsoft.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnePortal.Application.Common;

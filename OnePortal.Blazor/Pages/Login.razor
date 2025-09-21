@@ -1,0 +1,139 @@
+﻿@page "/"
+@layout EmptyLayout
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using OnePortal.Blazor.Components.Common
+@inject NavigationManager Nav
+@inject OnePortal.Blazor.Services.Auth.AuthService Auth
+
+<EditForm EditContext="_edit" OnValidSubmit="HandleLoginAsync">
+    <DataAnnotationsValidator />
+    <div class="login-shell">
+        <SideImagePanel ImageUrl="/login-assets/nightrender21369-obd-1300w.png"
+                        Alt="Promotional photo"
+                        Position="center"
+                        MinHeight="220px"
+                        Darken="false" />
+
+        <div class="login-right">
+            <div class="brand">
+                <h1>Welcome to ONE PORTAL</h1>
+                <p class="sub">One secure login. Endless possibilities.</p>
+            </div>
+
+            <!-- Email -->
+            <div class="field">
+                <label for="email">Email</label>
+                <input id="email"
+                       class="input"
+                       type="email"
+                       @bind="model.Email"
+                       placeholder="Enter your email"
+                       autocomplete="email"
+                       inputmode="email"
+                       autofocus />
+                <ValidationMessage For="@(() => model.Email)" class="validation-message" />
+            </div>
+
+            <!-- Password with toggle -->
+            <div class="field password">
+                <label for="password">Password</label>
+                <div class="password-wrap">
+                    <input id="password"
+                           class="input"
+                           type="@(showPwd ? "text" : "password")"
+                           @bind="model.Password"
+                           placeholder="Enter your Password"
+                           autocomplete="current-password" />
+
+                    <button type="button"
+                            class="toggle"
+                            @onclick="TogglePassword"
+                            aria-label="@(showPwd ? "Hide password" : "Show password")"
+                            title="@(showPwd ? "Hide password" : "Show password")">
+                        <i class="bi @(showPwd ? "bi-eye-slash" : "bi-eye")"></i>
+                    </button>
+                </div>
+                <ValidationMessage For="@(() => model.Password)" class="validation-message" />
+            </div>
+
+
+            <div class="forgot">
+                <a href="/forgot-password">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn primary" disabled="@_busy">
+                @(_busy ? "Signing in..." : "Login")
+            </button>
+
+            @if (!string.IsNullOrWhiteSpace(_error))
+            {
+                <div class="error-message">@_error</div>
+            }
+
+            <ValidationSummary class="validation-errors" />
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private readonly LoginModel model = new();
+    private EditContext? _edit;
+    private bool showPwd;
+    private bool _busy;
+    private string? _error;
+
+    protected override void OnInitialized()
+    {
+        _edit = new EditContext(model);
+        // Add nice "valid/invalid" classes to inputs
+        _edit.SetFieldCssClassProvider(new InputStateClasses("valid", "invalid", "modified"));
+    }
+
+    private void TogglePassword() => showPwd = !showPwd;
+
+    private async Task HandleLoginAsync()
+    {
+        _busy = true;
+        _error = null;
+
+        try
+        {
+            var (ok, err) = await Auth.LoginAsync(model.Email, model.Password);
+            if (ok) Nav.NavigateTo("/");
+            else _error = err ?? "Login failed. Please try again.";
+        }
+        catch (Exception ex)
+        {
+            _error = "Unexpected error. Please try again later.";
+            Console.Error.WriteLine(ex);
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    public sealed class LoginModel
+    {
+        [Required, EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Password { get; set; } = string.Empty;
+    }
+
+    private sealed class InputStateClasses : FieldCssClassProvider
+    {
+        private readonly string _valid; private readonly string _invalid; private readonly string _modified;
+        public InputStateClasses(string valid, string invalid, string modified)
+        { _valid = valid; _invalid = invalid; _modified = modified; }
+
+        public override string GetFieldCssClass(EditContext editContext, in FieldIdentifier fieldIdentifier)
+        {
+            var isValid = !editContext.GetValidationMessages(fieldIdentifier).Any();
+            var isModified = editContext.IsModified(fieldIdentifier);
+            return $"{(isValid ? _valid : _invalid)}{(isModified ? $" {_modified}" : "")}";
+        }
+    }
+}

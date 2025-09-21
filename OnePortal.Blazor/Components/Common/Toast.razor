@@ -1,0 +1,11 @@
+﻿namespace OnePortal.Blazor.Components.Common
+{
+@code {
+    private string? _msg; private bool _show;
+    public void Show(string msg) { _msg = msg; _show = true; StateHasChanged(); Task.Delay(4000).ContinueWith(_ => { _show = false; InvokeAsync(StateHasChanged); }); }
+}
+@if (_show)
+{
+    <div class="toast">@_msg</div>
+}
+}

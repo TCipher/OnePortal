@@ -1,0 +1,200 @@
+﻿/* ===== ONE PORTAL – Login (CSS isolation) ===== */
+
+/* predictable sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* layout */
+.login-shell {
+    --primary: #001F57;
+    --heading: #292929;
+    --sub: #585858;
+    --placeholder: #C9D3E0;
+    --border: #254a76;
+    --input-h: 55px;
+    --input-r: 16px;
+    --content-w: 520px;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.login-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 56px;
+    gap: 16px;
+}
+
+.brand h1 {
+    margin: 0 0 6px;
+    color: var(--heading);
+    font-weight: 800;
+    font-size: clamp(22px, 3vw, 32px);
+}
+
+.brand .sub {
+    margin: 0;
+    color: var(--sub);
+    font-size: 14px;
+}
+
+/* fields */
+.field {
+    width: min(var(--content-w), 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+    .field label {
+        font-size: 13px;
+        font-weight: 700;
+        color: #222;
+        letter-spacing: .2px;
+    }
+
+/* base input look (for both .input and .form-control) */
+.input,
+.form-control {
+    width: 100%;
+    height: var(--input-h);
+    padding: 0 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--input-r);
+    font-size: 15px;
+    outline: none;
+    background: #46688e;
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+    .input::placeholder,
+    .form-control::placeholder {
+        color: var(--placeholder);
+    }
+
+    /* validation colors */
+    .input.valid,
+    .form-control.valid {
+        border-color: #2e7d32;
+    }
+
+    .input.invalid,
+    .form-control.invalid {
+        border-color: #c62828;
+    }
+
+    .input.modified,
+    .form-control.modified {
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+    }
+
+/* password + eye */
+.password .password-wrap {
+    position: relative;
+    width: min(var(--content-w), 100%);
+}
+
+    .password .password-wrap .input,
+    .password .password-wrap .form-control {
+        padding-right: 46px;
+    }
+
+.password .toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    padding: 6px 8px;
+    cursor: pointer;
+    line-height: 0;
+    color: #8aa0b9;
+}
+
+    .password .toggle:hover {
+        color: #ffffff;
+    }
+
+    .password .toggle i {
+        font-size: 20px;
+        line-height: 1;
+        display: block;
+    }
+
+/* forgot + button aligned with inputs */
+.forgot {
+    width: min(var(--content-w), 100%);
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+    .forgot a {
+        font-size: 12px;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 800;
+    }
+
+        .forgot a:hover {
+            text-decoration: underline;
+        }
+
+.btn.primary {
+    width: min(var(--content-w), 100%);
+    height: var(--input-h);
+    border-radius: 22px;
+    border: 0;
+    background: var(--primary);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 22px;
+    cursor: pointer;
+}
+
+    .btn.primary:hover {
+        filter: brightness(1.05);
+    }
+
+    .btn.primary:active {
+        transform: translateY(1px);
+    }
+
+    .btn.primary[disabled] {
+        opacity: .7;
+        cursor: not-allowed;
+    }
+
+/* messages */
+.validation-message,
+.validation-errors li {
+    color: #c62828;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.error-message {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #c62828;
+    font-weight: 600;
+}
+
+/* responsive */
+@media (max-width: 960px) {
+    .login-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .login-right {
+        padding: 28px 22px;
+    }
+}

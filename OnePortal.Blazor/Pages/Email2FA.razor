@@ -1,0 +1,126 @@
+﻿@page "/mfa/email"
+@layout EmptyLayout
+@inject OnePortal.Blazor.Services.Auth.AuthService Auth
+@inject OnePortal.Blazor.Services.Auth.OtpService Otp
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<div class="twofa-shell">
+    <div class="twofa-left">
+        <img src="/login-assets/nightrender21369-obd-1300w.png"
+             alt="Promotional photo"
+             class="twofa-img" />
+    </div>
+
+    <div class="twofa-right">
+        <h1>Enter 6‑Digit code</h1>
+        <p>We’ve sent a 6‑digit code to your email. Please enter it here to continue.</p>
+
+        <label>Enter code</label>
+        <div class="otp-boxes">
+            @for (int i = 0; i < 6; i++)
+            {
+                var idx = i;  // avoid the closure bug that causes IndexOutOfRange
+                <input class="otp-input"
+                       maxlength="1"
+                       inputmode="numeric"
+                       autocomplete="one-time-code"
+                       @bind-value="codeDigits[idx]"
+                       @bind-value:event="oninput" />
+            }
+        </div>
+
+        <p class="small-text">
+            I didn’t receive a code
+            <a href="" @onclick="Resend" @onclick:preventDefault="true">Resend</a>
+            @if (sendBusy)
+            {
+                <span style="margin-left:8px;">Sending…</span>
+            }
+        </p>
+
+        <button type="button"
+                class="btn primary"
+                disabled="@verifyBusy"
+                @onclick="Verify">
+            @(verifyBusy ? "Verifying…" : "Enable")
+        </button>
+
+        @if (!string.IsNullOrWhiteSpace(error))
+        {
+            <div class="error-message">@error</div>
+        }
+    </div>
+</div>
+
+@code {
+    // Store six single-character values for the code
+    private readonly string[] codeDigits = new[] { "", "", "", "", "", "" };
+
+    private bool sendBusy;     // true only while sending or resending
+    private bool verifyBusy;   // true only while verifying
+    private string? error;
+
+    private string Code => string.Concat(codeDigits).Trim();
+
+    // We DO NOT automatically call Send() here. The code is sent before navigating,
+    // and user can click Resend if needed.
+
+    private async Task Resend(MouseEventArgs _)
+    {
+        // clear the boxes
+        for (int i = 0; i < codeDigits.Length; i++)
+            codeDigits[i] = string.Empty;
+
+        sendBusy = true;
+        error = null;
+        try
+        {
+            var email = Auth.GetPrincipal().Identity?.Name ?? "";
+            var res = await Otp.SendAsync(email);
+            if (res?.Ok != true)
+                error = res?.Error ?? "Failed to resend.";
+        }
+        catch
+        {
+            error = "Unexpected error while resending.";
+        }
+        finally
+        {
+            sendBusy = false;
+        }
+    }
+
+    private async Task Verify()
+    {
+        // only verify if exactly 6 digits are entered and not already verifying
+        if (verifyBusy || Code.Length != 6)
+            return;
+
+        verifyBusy = true;
+        error = null;
+        try
+        {
+            var challengeId = await JS.InvokeAsync<string>("localStorage.getItem", "onep.challenge");
+            if (string.IsNullOrWhiteSpace(challengeId))
+            {
+                error = "Invalid challenge.";
+                return;
+            }
+
+            var res = await Otp.VerifyAsync(challengeId, Code);
+            if (res?.Ok == true)
+                Nav.NavigateTo("/dashboard", true);
+            else
+                error = res?.Error ?? "Invalid code.";
+        }
+        catch
+        {
+            error = "Unexpected error. Please try again later.";
+        }
+        finally
+        {
+            verifyBusy = false;
+        }
+    }
+}

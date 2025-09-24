@@ -1,0 +1,349 @@
+@page "/security"
+@using OnePortal.Blazor.Services.Auth
+@using Microsoft.AspNetCore.Components.Web
+@inject AuthService Auth
+@inject WebAuthnClient WebAuthn
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<PageTitle>Security Settings - OnePortal</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Security Settings</h2>
+                <button class="btn btn-outline-secondary" @onclick="GoBack">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Passkeys Section -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-key me-2"></i>Passkeys
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">
+                        Passkeys provide a secure and convenient way to sign in without passwords. 
+                        You can use your device's biometric authentication or PIN.
+                    </p>
+
+                    @if (_busy)
+                    {
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 text-muted">@_busyMessage</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Add New Passkey -->
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="text" 
+                                           class="form-control" 
+                                           placeholder="Enter a name for this passkey (e.g., 'My iPhone', 'Work Laptop')"
+                                           @bind="newPasskeyName"
+                                           @onkeypress="HandleKeyPress" />
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary w-100" 
+                                            @onclick="AddPasskey" 
+                                            disabled="@(string.IsNullOrWhiteSpace(newPasskeyName) || _busy)">
+                                        <i class="fas fa-plus me-2"></i>Add Passkey
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Passkeys List -->
+                        <div class="list-group">
+                            @if (_passkeys.Any())
+                            {
+                                @foreach (var passkey in _passkeys)
+                                {
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">@passkey.Name</h6>
+                                            <small class="text-muted">
+                                                Added @passkey.CreatedDate.ToString("MMM dd, yyyy")
+                                            </small>
+                                        </div>
+                                        <button class="btn btn-outline-danger btn-sm" 
+                                                @onclick="() => RemovePasskey(passkey.Id)"
+                                                title="Remove passkey">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="text-center py-4 text-muted">
+                                    <i class="fas fa-key fa-3x mb-3 opacity-50"></i>
+                                    <p>No passkeys registered yet</p>
+                                    <p class="small">Add your first passkey to get started with secure, passwordless authentication.</p>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(_error))
+                    {
+                        <div class="alert alert-danger mt-3" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>@_error
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(_success))
+                    {
+                        <div class="alert alert-success mt-3" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>@_success
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Security Tips -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-shield-alt me-2"></i>Security Tips
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Use descriptive names for your passkeys to easily identify them
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Register passkeys on multiple devices for better accessibility
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Remove passkeys from devices you no longer use
+                        </li>
+                        <li class="mb-0">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Keep your devices secure with strong PINs or biometrics
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Quick Actions -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">Quick Actions</h6>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-outline-primary w-100 mb-2" @onclick="TestPasskeyLogin">
+                        <i class="fas fa-sign-in-alt me-2"></i>Test Passkey Login
+                    </button>
+                    <button class="btn btn-outline-info w-100 mb-2" @onclick="RefreshPasskeys">
+                        <i class="fas fa-sync me-2"></i>Refresh List
+                    </button>
+                </div>
+            </div>
+
+            <!-- Help -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h6 class="mb-0">Need Help?</h6>
+                </div>
+                <div class="card-body">
+                    <p class="small text-muted mb-3">
+                        Having trouble with passkeys? Check our support documentation or contact IT support.
+                    </p>
+                    <button class="btn btn-outline-secondary btn-sm w-100">
+                        <i class="fas fa-question-circle me-2"></i>Get Help
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private readonly List<PasskeyInfo> _passkeys = new();
+    private string newPasskeyName = "";
+    private bool _busy = false;
+    private string _busyMessage = "";
+    private string? _error;
+    private string? _success;
+
+    public class PasskeyInfo
+    {
+        public string Id { get; set; } = "";
+        public string Name { get; set; } = "";
+        public DateTime CreatedDate { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadPasskeys();
+    }
+
+    private async Task LoadPasskeys()
+    {
+        _busy = true;
+        _busyMessage = "Loading passkeys...";
+        _error = null;
+        _success = null;
+
+        try
+        {
+            // For now, we'll simulate loading passkeys
+            // In a real implementation, you'd call an API to get the user's passkeys
+            await Task.Delay(500); // Simulate API call
+            
+            // TODO: Replace with actual API call to get user's passkeys
+            _passkeys.Clear();
+        }
+        catch (Exception ex)
+        {
+            _error = "Failed to load passkeys. Please try again.";
+            Console.Error.WriteLine(ex);
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task AddPasskey()
+    {
+        if (string.IsNullOrWhiteSpace(newPasskeyName))
+            return;
+
+        _busy = true;
+        _busyMessage = "Creating passkey...";
+        _error = null;
+        _success = null;
+
+        try
+        {
+            var success = await WebAuthn.RegisterAsync(newPasskeyName.Trim());
+            
+            if (success)
+            {
+                _success = $"Passkey '{newPasskeyName}' has been successfully added!";
+                newPasskeyName = "";
+                await LoadPasskeys(); // Refresh the list
+            }
+            else
+            {
+                _error = "Failed to create passkey. Please make sure your device supports passkeys and try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = "An error occurred while creating the passkey. Please try again.";
+            Console.Error.WriteLine(ex);
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task RemovePasskey(string passkeyId)
+    {
+        _busy = true;
+        _busyMessage = "Removing passkey...";
+        _error = null;
+        _success = null;
+
+        try
+        {
+            // TODO: Implement actual passkey removal API call
+            await Task.Delay(500); // Simulate API call
+            
+            _success = "Passkey has been removed successfully.";
+            await LoadPasskeys(); // Refresh the list
+        }
+        catch (Exception ex)
+        {
+            _error = "Failed to remove passkey. Please try again.";
+            Console.Error.WriteLine(ex);
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task TestPasskeyLogin()
+    {
+        var email = Auth.GetPrincipal().Identity?.Name ?? await JS.InvokeAsync<string>("localStorage.getItem", "onep.email");
+        if (string.IsNullOrEmpty(email))
+        {
+            _error = "Unable to determine your email address.";
+            return;
+        }
+
+        _busy = true;
+        _busyMessage = "Testing passkey login...";
+        _error = null;
+        _success = null;
+
+        try
+        {
+            var result = await WebAuthn.AuthenticateAsync(email);
+            
+            if (result.Success)
+            {
+                _success = "Passkey login test successful! You can now use passkeys to sign in.";
+            }
+            else if (result.NoPasskeysRegistered)
+            {
+                _error = "No passkeys registered for this account. Please add a passkey first.";
+            }
+            else
+            {
+                _error = result.Error ?? "Passkey login test failed. Make sure you have at least one passkey registered.";
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = "An error occurred during the test. Please try again.";
+            Console.Error.WriteLine(ex);
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task RefreshPasskeys()
+    {
+        await LoadPasskeys();
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await AddPasskey();
+        }
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/dashboard");
+    }
+}

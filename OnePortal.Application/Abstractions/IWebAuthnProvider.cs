@@ -40,4 +40,11 @@ public interface IWebAuthnProvider
         uint signCount,
         byte[] userHandle,
         CancellationToken ct);
+
+    // Build universal options that work for both authentication and registration (GitHub-style)
+    Task<string> BuildUniversalPasskeyOptionsAsync(
+        string email,
+        string displayName,
+        IEnumerable<string> existingCredentialIds,
+        CancellationToken ct);
 }

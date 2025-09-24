@@ -7,7 +7,7 @@ namespace OnePortal.Blazor.Services.Auth
         private readonly AuthApi _api = api;
 
 
-        public Task<ApiResult?> SendAsync(string email) => _api.SendEmailOtpAsync(new SendOtpRequest(email));
-        public Task<ApiResult?> VerifyAsync(string challengeId, string code) => _api.VerifyEmailOtpAsync(new VerifyOtpRequest(challengeId, code));
+        public Task<ApiResult?> SendAsync(string email, string? challengeId = null) => _api.SendEmailOtpAsync(new SendOtpRequest(email, challengeId));
+        public Task<LoginResponse?> VerifyAsync(string email, string challengeId, string code) => _api.VerifyEmailOtpAsync(new VerifyOtpRequest(email, code, challengeId));
     }
 }

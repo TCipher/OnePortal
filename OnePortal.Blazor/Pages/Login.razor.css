@@ -173,6 +173,60 @@
         cursor: not-allowed;
     }
 
+/* divider */
+.divider {
+    width: min(var(--content-w), 100%);
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+    text-align: center;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.divider span {
+    padding: 0 16px;
+    color: var(--sub);
+    font-size: 12px;
+    font-weight: 600;
+    background: #fff;
+}
+
+/* secondary button */
+.btn.secondary {
+    width: min(var(--content-w), 100%);
+    height: var(--input-h);
+    border-radius: 22px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn.secondary:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn.secondary:active {
+    transform: translateY(1px);
+}
+
+.btn.secondary[disabled] {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
 /* messages */
 .validation-message,
 .validation-errors li {

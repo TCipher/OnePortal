@@ -34,18 +34,27 @@ public class BeginAssertionHandler : IRequestHandler<BeginAssertionCommand, obje
 
     public async Task<object> Handle(BeginAssertionCommand r, CancellationToken ct)
     {
+        Console.WriteLine($"[BeginAssertionHandler] Starting assertion for email: {r.Email}");
+        
         // 1. Lookup active user
         var user = await _users.GetByEmailAsync(r.Email, ct)
                    ?? throw new UnauthorizedAccessException();
 
+        Console.WriteLine($"[BeginAssertionHandler] Found user: {user.EmailAddress}, Active: {user.IsActive}");
+
         if (!user.IsActive) throw new UnauthorizedAccessException();
 
-        // 2. Get user’s active credentials
+        // 2. Get user's active credentials
         var creds = await _creds.GetActiveByUserAsync(user.Id, ct);
         var allowIds = creds.Select(c => c.CredentialId).ToList();
+        
+        Console.WriteLine($"[BeginAssertionHandler] Found {allowIds.Count} active credentials for user");
 
         // 3. Build WebAuthn assertion options
         var optionsJson = await _provider.BuildAssertionOptionsAsync(allowIds, ct);
+        
+        Console.WriteLine($"[BeginAssertionHandler] Got options JSON: {optionsJson != null}");
+        Console.WriteLine($"[BeginAssertionHandler] Options JSON length: {optionsJson?.Length ?? 0}");
 
         // 4. Store challenge for verification step
         await _challenge.StoreAsync(
@@ -55,6 +64,9 @@ public class BeginAssertionHandler : IRequestHandler<BeginAssertionCommand, obje
             ct);
 
         // 5. Return deserialized options
-        return JsonSerializer.Deserialize<object>(optionsJson)!;
+        var result = JsonSerializer.Deserialize<object>(optionsJson);
+        Console.WriteLine($"[BeginAssertionHandler] Deserialized result: {result != null}");
+        
+        return result!;
     }
 }

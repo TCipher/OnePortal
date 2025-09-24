@@ -1,5 +1,10 @@
-﻿<h3>Index</h3>
+﻿@page "/index"
+@inject NavigationManager Nav
 
 @code {
-
+    protected override void OnInitialized()
+    {
+        // Redirect to dashboard for authenticated users, login for others
+        Nav.NavigateTo("/dashboard");
+    }
 }

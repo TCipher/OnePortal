@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using OnePortal.Blazor.Models;
+using System.Net.Http.Json;
 
 namespace OnePortal.Blazor.Services.Http
 {
@@ -17,6 +18,15 @@ namespace OnePortal.Blazor.Services.Http
             var res = await _http.PostAsJsonAsync(url, body, ct);
             res.EnsureSuccessStatusCode();
             return await res.Content.ReadFromJsonAsync<T>(cancellationToken: ct);
+        }
+
+        // Special method for API responses that are wrapped in ApiResponse<T>
+        public async Task<T?> PostApiResponseAsync<T>(string url, object body, CancellationToken ct = default)
+        {
+            var res = await _http.PostAsJsonAsync(url, body, ct);
+            res.EnsureSuccessStatusCode();
+            var apiResponse = await res.Content.ReadFromJsonAsync<ApiResponse<T>>(cancellationToken: ct);
+            return apiResponse?.Ok == true ? apiResponse.Data : default;
         }
     }
 }

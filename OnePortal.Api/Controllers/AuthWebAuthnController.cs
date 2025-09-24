@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnePortal.Application.Common;
 using OnePortal.Application.WebAuthn.Commands;
+using OnePortal.Application.Auth.Dtos;
 
 namespace OnePortal.API.Controllers;
 
@@ -41,13 +42,54 @@ public class AuthWebAuthnController : ControllerBase
 
     [HttpPost("assertion/finish")]
     [AllowAnonymous]
-    public async Task<ActionResult<ApiResponse<object>>> FinishAssertion([FromBody] FinishAssertRequest req, CancellationToken ct)
+    public async Task<ActionResult<ApiResponse<LoginResultDto>>> FinishAssertion([FromBody] FinishAssertRequest req, CancellationToken ct)
     {
         var result = await _mediator.Send(new FinishAssertionCommand(req.Email, req.AssertionResponse), ct);
-        return Ok(ApiResponse<object>.Success(result));
+        return Ok(ApiResponse<LoginResultDto>.Success(result));
+    }
+
+    // GitHub-style passkey authentication with automatic registration fallback
+    [HttpPost("passkey/begin")]
+    [AllowAnonymous]
+    public async Task<ActionResult<ApiResponse<object>>> BeginPasskeyAuth([FromBody] BeginPasskeyAuthRequest req, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new PasskeyAuthenticateWithFallbackCommand(req.Email, req.DisplayName), ct);
+        
+        if (result.Success && result.Options is not null)
+        {
+            return Ok(ApiResponse<object>.Success(new
+            {
+                options = result.Options,
+                email = result.Email,
+                isNewUser = result.IsNewUser,
+                hasExistingPasskeys = result.HasExistingPasskeys
+            }));
+        }
+        
+        return BadRequest(ApiResponse<object>.Fail("passkey_error", result.Error ?? "Failed to initialize passkey authentication"));
+    }
+
+    [HttpPost("passkey/complete")]
+    [AllowAnonymous]
+    public async Task<ActionResult<ApiResponse<object>>> CompletePasskeyAuth([FromBody] CompletePasskeyAuthRequest req, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new CompletePasskeyAuthCommand(req.Email, req.CredentialResponse), ct);
+        
+        if (result.Success && result.LoginResult is not null)
+        {
+            return Ok(ApiResponse<object>.Success(new
+            {
+                loginResult = result.LoginResult,
+                message = result.Message
+            }));
+        }
+        
+        return BadRequest(ApiResponse<object>.Fail("passkey_error", result.Error ?? "Passkey authentication failed"));
     }
 }
 
 public record BeginRegRequest(string DisplayName);
 public record BeginAssertRequest(string Email);
 public record FinishAssertRequest(string Email, object AssertionResponse);
+public record BeginPasskeyAuthRequest(string Email, string? DisplayName = null);
+public record CompletePasskeyAuthRequest(string Email, object CredentialResponse);

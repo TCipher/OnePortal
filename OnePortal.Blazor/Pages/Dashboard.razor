@@ -1,4 +1,226 @@
 ﻿@page "/dashboard"
-@attribute [Microsoft.AspNetCore.Authorization.Authorize]
-<h1>Dashboard</h1>
-<p>Placeholder for modules…</p>
+@using OnePortal.Blazor.Services.Auth
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<PageTitle>Dashboard - OnePortal</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="mb-0">Dashboard</h1>
+                <div>
+                    <button class="btn btn-outline-primary me-2" @onclick="GoToSecurity">
+                        <i class="fas fa-shield-alt me-2"></i>Security Settings
+                    </button>
+                    <button class="btn btn-outline-secondary" @onclick="Logout">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Welcome Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-home me-2"></i>Welcome to OnePortal
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">Welcome back! You have successfully logged into the OnePortal system.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-success rounded-circle p-2 me-3">
+                                    <i class="fas fa-check text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Authentication</h6>
+                                    <small class="text-muted">Successfully signed in</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-info rounded-circle p-2 me-3">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">User Profile</h6>
+                                    <small class="text-muted">@GetUserEmail()</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-outline-primary w-100 h-100 d-flex flex-column align-items-center py-3" @onclick="GoToSecurity">
+                                <i class="fas fa-key fa-2x mb-2"></i>
+                                <span>Manage Passkeys</span>
+                                <small class="text-muted">Set up secure authentication</small>
+                            </button>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-outline-info w-100 h-100 d-flex flex-column align-items-center py-3" @onclick="GoToWeather">
+                                <i class="fas fa-cloud fa-2x mb-2"></i>
+                                <span>Weather</span>
+                                <small class="text-muted">Check weather information</small>
+                            </button>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center py-3" @onclick="GoToCounter">
+                                <i class="fas fa-calculator fa-2x mb-2"></i>
+                                <span>Counter</span>
+                                <small class="text-muted">Test application features</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Security Status -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-shield-alt me-2"></i>Security Status
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-success rounded-circle p-2 me-3">
+                            <i class="fas fa-check text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Account Secure</h6>
+                            <small class="text-muted">Your account is protected</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-warning rounded-circle p-2 me-3">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Passkeys</h6>
+                            <small class="text-muted">Set up for easier login</small>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100" @onclick="GoToSecurity">
+                        <i class="fas fa-cog me-2"></i>Manage Security
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-clock me-2"></i>Recent Activity
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-success"></div>
+                            <div class="timeline-content">
+                                <h6 class="mb-0">Login Successful</h6>
+                                <small class="text-muted">Just now</small>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-info"></div>
+                            <div class="timeline-content">
+                                <h6 class="mb-0">Session Started</h6>
+                                <small class="text-muted">Just now</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .timeline-marker {
+        position: absolute;
+        left: -25px;
+        top: 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+    .timeline-content {
+        padding-left: 10px;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e9ecef;
+    }
+</style>
+
+@code {
+    private string GetUserEmail()
+    {
+        var principal = Auth.GetPrincipal();
+        return principal?.Identity?.Name ?? "Unknown User";
+    }
+
+    private void GoToSecurity()
+    {
+        Nav.NavigateTo("/security");
+    }
+
+    private void GoToWeather()
+    {
+        Nav.NavigateTo("/weather");
+    }
+
+    private void GoToCounter()
+    {
+        Nav.NavigateTo("/counter");
+    }
+
+    private async Task Logout()
+    {
+        await Auth.LogoutAsync();
+        Nav.NavigateTo("/login");
+    }
+}

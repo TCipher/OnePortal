@@ -76,8 +76,9 @@
         error = null;
         try
         {
-            var email = Auth.GetPrincipal().Identity?.Name ?? "";
-            var res = await Otp.SendAsync(email);
+            var email = Auth.GetPrincipal().Identity?.Name ?? await JS.InvokeAsync<string>("localStorage.getItem", "onep.email") ?? "";
+            var challengeId = await JS.InvokeAsync<string>("localStorage.getItem", "onep.challenge");
+            var res = await Otp.SendAsync(email, challengeId);
             if (res?.Ok != true)
                 error = res?.Error ?? "Failed to resend.";
         }
@@ -108,11 +109,18 @@
                 return;
             }
 
-            var res = await Otp.VerifyAsync(challengeId, Code);
-            if (res?.Ok == true)
+            var email = Auth.GetPrincipal().Identity?.Name ?? await JS.InvokeAsync<string>("localStorage.getItem", "onep.email") ?? "";
+            var res = await Otp.VerifyAsync(email, challengeId, Code);
+            if (res?.AccessToken != null)
+            {
+                // Store tokens and navigate to dashboard
+                await Auth.SetTokensAsync(res.AccessToken, res.RefreshToken);
                 Nav.NavigateTo("/dashboard", true);
+            }
             else
-                error = res?.Error ?? "Invalid code.";
+            {
+                error = "Invalid code. Please try again.";
+            }
         }
         catch
         {

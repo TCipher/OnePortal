@@ -1,10 +1,13 @@
 ﻿@page "/"
+@page "/login"
 @layout EmptyLayout
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
 @using OnePortal.Blazor.Components.Common
 @inject NavigationManager Nav
 @inject OnePortal.Blazor.Services.Auth.AuthService Auth
+@inject OnePortal.Blazor.Services.Auth.WebAuthnClient WebAuthn
+@inject IJSRuntime JS
 
 <EditForm EditContext="_edit" OnValidSubmit="HandleLoginAsync">
     <DataAnnotationsValidator />
@@ -66,6 +69,15 @@
                 @(_busy ? "Signing in..." : "Login")
             </button>
 
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <button type="button" class="btn secondary" disabled="@_busy" @onclick="LoginWithPasskey">
+                @(_busy ? "Signing in..." : "Login with Passkey")
+            </button>
+
+
             @if (!string.IsNullOrWhiteSpace(_error))
             {
                 <div class="error-message">@_error</div>
@@ -76,18 +88,37 @@
     </div>
 </EditForm>
 
+<!-- Passkey Modal -->
+<PasskeyModal IsVisible="_showPasskeyModal" 
+              Title="@_passkeyModalTitle"
+              Email="@model.Email"
+              OnResult="HandlePasskeyResult" />
+
+
 @code {
     private readonly LoginModel model = new();
     private EditContext? _edit;
     private bool showPwd;
     private bool _busy;
     private string? _error;
+    private bool _showPasskeyModal = false;
+    private string _passkeyModalTitle = "Sign in with passkey";
 
     protected override void OnInitialized()
     {
         _edit = new EditContext(model);
         // Add nice "valid/invalid" classes to inputs
         _edit.SetFieldCssClassProvider(new InputStateClasses("valid", "invalid", "modified"));
+
+        // Check for email parameter in URL
+        var uri = new Uri(Nav.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var emailParam = query["email"];
+        
+        if (!string.IsNullOrEmpty(emailParam))
+        {
+            model.Email = emailParam;
+        }
     }
 
     private void TogglePassword() => showPwd = !showPwd;
@@ -100,7 +131,7 @@
         try
         {
             var (ok, err) = await Auth.LoginAsync(model.Email, model.Password);
-            if (ok) Nav.NavigateTo("/");
+            if (ok) Nav.NavigateTo("/dashboard");
             else _error = err ?? "Login failed. Please try again.";
         }
         catch (Exception ex)
@@ -113,6 +144,218 @@
             _busy = false;
         }
     }
+
+    private async Task LoginWithPasskey()
+    {
+        _error = null;
+
+        if (string.IsNullOrWhiteSpace(model.Email))
+        {
+            _error = "Please enter your email address first.";
+            return;
+        }
+
+        // Check if user exists first
+        try
+        {
+            var userExists = await CheckUserExistsAsync(model.Email);
+            
+            if (userExists)
+            {
+                // User exists, try authentication
+                _passkeyModalTitle = "Sign in with passkey";
+                _showPasskeyModal = true;
+            }
+            else
+            {
+                // User doesn't exist, show registration option
+                var shouldRegister = await JS.InvokeAsync<bool>("confirm", 
+                    $"No account found for {model.Email}. Would you like to create a new account with a passkey?");
+                
+                if (shouldRegister)
+                {
+                    _passkeyModalTitle = "Create account with passkey";
+                    _showPasskeyModal = true;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error checking user existence: {ex}");
+            _error = "Unable to verify account. Please try again.";
+        }
+    }
+    
+    private async Task<bool> CheckUserExistsAsync(string email)
+    {
+        try
+        {
+            // This is a simplified check - in a real app you'd call an API endpoint
+            // For now, we'll assume the user exists if they have a valid email format
+            return !string.IsNullOrWhiteSpace(email) && email.Contains("@");
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    
+    private async Task HandlePasskeyResult(PasskeyModal.PasskeyResult result)
+    {
+        _showPasskeyModal = false;
+        _busy = true;
+        _error = null;
+
+        try
+        {
+            switch (result.Type)
+            {
+                case PasskeyModal.PasskeyResultType.Authenticate:
+                    await HandlePasskeyAuthentication(result);
+                    break;
+                    
+                case PasskeyModal.PasskeyResultType.Register:
+                    await HandlePasskeyRegistration(result);
+                    break;
+                    
+                case PasskeyModal.PasskeyResultType.Cancelled:
+                    // User cancelled, do nothing
+                    break;
+                    
+                case PasskeyModal.PasskeyResultType.Error:
+                    _error = result.Error ?? "An error occurred during passkey authentication.";
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error handling passkey result: {ex}");
+            _error = "Passkey authentication failed. Please try again.";
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+    
+    private async Task HandlePasskeyAuthentication(PasskeyModal.PasskeyResult result)
+    {
+        try
+        {
+            Console.WriteLine($"[Login] Starting passkey authentication for: {result.Email}");
+            
+            // Use the enhanced WebAuthn client with fallback
+            var authResult = await WebAuthn.AuthenticateWithFallbackAsync(result.Email, result.Email);
+            
+            if (authResult.Success)
+            {
+                Console.WriteLine("[Login] Authentication successful, navigating to dashboard");
+                Nav.NavigateTo("/dashboard", true);
+            }
+            else
+            {
+                Console.WriteLine($"[Login] Authentication failed: {authResult.Error}");
+                _error = authResult.Error ?? "Authentication failed. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Passkey authentication error: {ex}");
+            _error = "Authentication failed. Please try again or use your password.";
+        }
+    }
+    
+    private async Task HandlePasskeyRegistration(PasskeyModal.PasskeyResult result)
+    {
+        try
+        {
+            Console.WriteLine($"[Login] Starting passkey registration for: {result.Email}");
+            
+            // Start registration process
+            var success = await WebAuthn.RegisterForLoginAsync(result.Email, result.Email);
+            
+            if (success)
+            {
+                // Registration successful, now authenticate
+                var authResult = await WebAuthn.AuthenticateAsync(result.Email);
+                
+                if (authResult.Success)
+                {
+                    Nav.NavigateTo("/dashboard", true);
+                }
+                else
+                {
+                    _error = "Passkey created but authentication failed. Please try signing in again.";
+                }
+            }
+            else
+            {
+                _error = "Failed to create passkey. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Passkey registration error: {ex}");
+            _error = "Registration failed. Please try again.";
+        }
+    }
+    
+    private async Task CompletePasskeyAuthentication(string email, object credential)
+    {
+        try
+        {
+            var result = await WebAuthn.AuthenticateAsync(email);
+            
+            if (result.Success)
+            {
+                Nav.NavigateTo("/dashboard", true);
+            }
+            else
+            {
+                _error = result.Error ?? "Authentication failed. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error completing authentication: {ex}");
+            _error = "Authentication failed. Please try again.";
+        }
+    }
+    
+    private async Task CompletePasskeyRegistration(string email, object credential)
+    {
+        try
+        {
+            // Complete the registration process
+            var success = await WebAuthn.RegisterForLoginAsync(email, email);
+            
+            if (success)
+            {
+                // Now authenticate with the newly created passkey
+                var authResult = await WebAuthn.AuthenticateAsync(email);
+                
+                if (authResult.Success)
+                {
+                    Nav.NavigateTo("/dashboard", true);
+                }
+                else
+                {
+                    _error = "Passkey created but authentication failed. Please try signing in again.";
+                }
+            }
+            else
+            {
+                _error = "Failed to complete passkey registration.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error completing registration: {ex}");
+            _error = "Registration failed. Please try again.";
+        }
+    }
+
+
 
     public sealed class LoginModel
     {

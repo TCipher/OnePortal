@@ -37,18 +37,46 @@ namespace OnePortal.Blazor.Services.Auth
             try
             {
                 var res = await _api.LoginAsync(new LoginRequest(email, password));
-                if (res is null || string.IsNullOrWhiteSpace(res.AccessToken))
+                if (res is null)
                     return (false, "Invalid credentials");
 
+                // Handle password change required
+                if (res.MustChangePassword)
+                {
+                    await SetLocal(EmailKey, email);
+                    _nav.NavigateTo("/change-password", true);
+                    return (true, null);
+                }
 
-               await  SetLocal(AccessKey, res.AccessToken!);
-               await  SetLocal(EmailKey, email);
-               await  SetLocal(MustChangeKey, res.MustChangePassword ? "1" : "0");
+                // Handle MFA required
+                if (res.Mfa?.Required == true)
+                {
+                    await SetLocal(EmailKey, email);
+                    await SetLocal("onep.challenge", res.Mfa.ChallengeId ?? "");
+                    
+                    // If email MFA is required, send OTP automatically
+                    if (res.Mfa.Method == "EmailOtp")
+                    {
+                        await _api.SendEmailOtpAsync(new SendOtpRequest(email, res.Mfa.ChallengeId));
+                        _nav.NavigateTo("/mfa/email", true);
+                    }
+                    else
+                    {
+                        _nav.NavigateTo("/mfa/choice", true);
+                    }
+                    return (true, null);
+                }
+
+                // Handle successful login with tokens
+                if (string.IsNullOrWhiteSpace(res.AccessToken))
+                    return (false, "Invalid credentials");
+
+                await SetLocal(AccessKey, res.AccessToken!);
+                await SetLocal(EmailKey, email);
+                await SetLocal(MustChangeKey, "0");
                 await _state.NotifyUserAuthentication(res.AccessToken!);
 
-
-                if (res.MustChangePassword) _nav.NavigateTo("/change-password", true);
-                else _nav.NavigateTo("/mfa/choice", true);
+                _nav.NavigateTo("/dashboard", true);
                 return (true, null);
             }
             catch (Exception ex)
@@ -80,6 +108,13 @@ namespace OnePortal.Blazor.Services.Auth
 
         public ClaimsPrincipal GetPrincipal() => _state.CurrentUser ?? new ClaimsPrincipal(new ClaimsIdentity());
 
+        public async Task SetTokensAsync(string accessToken, string? refreshToken = null)
+        {
+            await SetLocal(AccessKey, accessToken);
+            if (!string.IsNullOrWhiteSpace(refreshToken))
+                await SetLocal(RefreshKey, refreshToken);
+            await _state.NotifyUserAuthentication(accessToken);
+        }
 
         private async Task<string?> GetLocal(string key) =>
      await _storage.GetItemAsync(key);

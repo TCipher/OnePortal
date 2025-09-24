@@ -21,6 +21,7 @@ public record LoginResultDto
     public string? RefreshToken { get; init; }
     public int? RefreshExpiresIn { get; init; }
     public MfaStateDto? Mfa { get; init; }
+    public bool MustChangePassword { get; init; }
 
     public static LoginResultDto Issued(string access, int accessSec, string refresh, int refreshSec) =>
         new()

@@ -20,6 +20,7 @@ namespace OnePortal.Infrastructure.Persistence
         private IPortalRoleRepository? _portalRoles;
         private IUserPortalAccessRepository? _userPortalAccesses;
         private IAuditLogRepository? _auditLogs;
+        private IWebAuthnCredentialRepository? _webAuthnCredentials;
 
         public UnitOfWork(OnePortalDbContext db)
         {
@@ -31,6 +32,7 @@ namespace OnePortal.Infrastructure.Persistence
         public IPortalRoleRepository PortalRoles => _portalRoles ??= new EfPortalRoleRepository(_db);
         public IUserPortalAccessRepository UserPortalAccesses => _userPortalAccesses ??= new UserPortalAccessRepository(_db);
         public IAuditLogRepository AuditLogs => _auditLogs ??= new AuditLogRepository(_db);
+        public IWebAuthnCredentialRepository WebAuthnCredentials => _webAuthnCredentials ??= new WebAuthnCredentialRepository(_db);
 
         public IRepository<T> Repository<T>() where T : BaseEntity
         {

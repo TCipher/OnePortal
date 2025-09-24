@@ -59,10 +59,21 @@ public class PasswordLoginHandler : IRequestHandler<PasswordLoginCommand, LoginR
         await _users.UpdateAsync(user, ct);
         await _uow.SaveChangesAsync(ct);
 
-        // Password expiry
+        // Password expiry - set MustChangePassword if needed
         if (user.MustChangePassword || user.PasswordLastChangedUtc is null ||
             (DateTime.UtcNow - user.PasswordLastChangedUtc.Value).TotalDays >= 180)
-            throw new InvalidOperationException("Password expired. Change password required.");
+        {
+            user.MustChangePassword = true;
+            await _users.UpdateAsync(user, ct);
+            await _uow.SaveChangesAsync(ct);
+            
+            return new LoginResultDto
+            {
+                MustChangePassword = true,
+                AccessToken = null,
+                RefreshToken = null
+            };
+        }
 
         if (user.PreferredMfaMethod == MfaMethod.EmailOtp)
         {

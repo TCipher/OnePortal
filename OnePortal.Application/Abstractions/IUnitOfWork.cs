@@ -14,6 +14,7 @@ namespace OnePortal.Application.Abstractions
         IPortalRoleRepository PortalRoles { get; }
         IUserPortalAccessRepository UserPortalAccesses { get; }
         IAuditLogRepository AuditLogs { get; }
+        IWebAuthnCredentialRepository WebAuthnCredentials { get; }
         IRepository<T> Repository<T>() where T : BaseEntity;
         Task<int> SaveChangesAsync(CancellationToken ct = default);
         Task BeginTransactionAsync(CancellationToken ct = default);

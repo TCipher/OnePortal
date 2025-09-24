@@ -1,0 +1,347 @@
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+@if (IsVisible)
+{
+    <div class="passkey-modal-overlay" @onclick="HandleOverlayClick">
+        <div class="passkey-modal" @onclick:stopPropagation="true">
+            <div class="passkey-modal-header">
+                <h3>@Title</h3>
+                <button class="passkey-modal-close" @onclick="Close" aria-label="Close">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            
+            <div class="passkey-modal-body">
+                @if (CurrentStep == PasskeyStep.Initializing)
+                {
+                    <div class="passkey-step">
+                        <div class="passkey-spinner">
+                            <div class="spinner"></div>
+                        </div>
+                        <p>Checking passkey support...</p>
+                    </div>
+                }
+                else if (CurrentStep == PasskeyStep.Authenticating)
+                {
+                    <div class="passkey-step">
+                        <div class="passkey-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h4>Sign in with a passkey</h4>
+                        <p>Use your device's built-in authenticator or a security key to sign in.</p>
+                        
+                        @if (ShowQRCode)
+                        {
+                            <div class="qr-section">
+                                <div id="passkey-qr-code"></div>
+                            </div>
+                        }
+                        
+                        <div class="passkey-options">
+                            @if (AvailableMethods.Contains("platform"))
+                            {
+                                <button class="passkey-option platform" @onclick="UsePlatformAuthenticator">
+                                    <i class="bi bi-laptop"></i>
+                                    <span>Use this device</span>
+                                </button>
+                            }
+                            
+                            @if (AvailableMethods.Contains("cross-platform"))
+                            {
+                                <button class="passkey-option cross-platform" @onclick="UseCrossPlatformAuthenticator">
+                                    <i class="bi bi-phone"></i>
+                                    <span>Use another device</span>
+                                </button>
+                            }
+                        </div>
+                        
+                        <div class="passkey-actions">
+                            <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                        </div>
+                    </div>
+                }
+                else if (CurrentStep == PasskeyStep.Registering)
+                {
+                    <div class="passkey-step">
+                        <div class="passkey-icon">
+                            <i class="bi bi-key"></i>
+                        </div>
+                        <h4>Create a passkey</h4>
+                        <p>Set up a passkey for <strong>@Email</strong> to enable passwordless sign-in.</p>
+                        
+                        <div class="passkey-benefits">
+                            <div class="benefit">
+                                <i class="bi bi-shield-check"></i>
+                                <span>More secure than passwords</span>
+                            </div>
+                            <div class="benefit">
+                                <i class="bi bi-lightning"></i>
+                                <span>Faster sign-in</span>
+                            </div>
+                            <div class="benefit">
+                                <i class="bi bi-phone"></i>
+                                <span>Works across devices</span>
+                            </div>
+                        </div>
+                        
+                        <div class="passkey-actions">
+                            <button class="btn btn-primary" @onclick="CreatePasskey" disabled="@IsBusy">
+                                @if (IsBusy)
+                                {
+                                    <span class="spinner-sm"></span>
+                                    <span>Creating passkey...</span>
+                                }
+                                else
+                                {
+                                    <span>Create passkey</span>
+                                }
+                            </button>
+                            <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                        </div>
+                    </div>
+                }
+                else if (CurrentStep == PasskeyStep.Processing)
+                {
+                    <div class="passkey-step">
+                        <div class="passkey-spinner">
+                            <div class="spinner"></div>
+                        </div>
+                        <p>@ProcessingMessage</p>
+                    </div>
+                }
+                else if (CurrentStep == PasskeyStep.Error)
+                {
+                    <div class="passkey-step error">
+                        <div class="passkey-icon error">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <h4>Something went wrong</h4>
+                        <p>@ErrorMessage</p>
+                        
+                        <div class="passkey-actions">
+                            <button class="btn btn-primary" @onclick="Retry">Try again</button>
+                            <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public string Title { get; set; } = "Sign in with passkey";
+    [Parameter] public string Email { get; set; } = string.Empty;
+    [Parameter] public EventCallback<PasskeyResult> OnResult { get; set; }
+    
+    private PasskeyStep CurrentStep = PasskeyStep.Initializing;
+    private bool IsBusy = false;
+    private string ErrorMessage = string.Empty;
+    private string ProcessingMessage = string.Empty;
+    private List<string> AvailableMethods = new();
+    private bool ShowQRCode = false;
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        if (IsVisible)
+        {
+            await InitializePasskeyFlow();
+        }
+    }
+    
+    private async Task InitializePasskeyFlow()
+    {
+        CurrentStep = PasskeyStep.Initializing;
+        IsBusy = true;
+        
+        try
+        {
+            // Check passkey support
+            var isSupported = await JS.InvokeAsync<bool>("passkeyAuth.isSupported");
+            if (!isSupported)
+            {
+                await ShowError("Passkeys are not supported on this device or browser.");
+                return;
+            }
+            
+            // Get available authentication methods
+            var methods = await JS.InvokeAsync<string[]>("passkeyAuth.getAvailableMethods");
+            AvailableMethods = methods.ToList();
+            
+            if (AvailableMethods.Count == 0)
+            {
+                await ShowError("No passkey authenticators are available on this device.");
+                return;
+            }
+            
+            CurrentStep = PasskeyStep.Authenticating;
+            IsBusy = false;
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error initializing passkey flow: {ex}");
+            await ShowError("Failed to initialize passkey authentication.");
+        }
+    }
+    
+    private async Task UsePlatformAuthenticator()
+    {
+        await StartAuthentication("platform");
+    }
+    
+    private async Task UseCrossPlatformAuthenticator()
+    {
+        ShowQRCode = true;
+        var authData = new { email = Email, timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds() };
+        await JS.InvokeVoidAsync("generatePasskeyQRCode", "passkey-qr-code", authData);
+        await StartAuthentication("cross-platform");
+    }
+    
+    private async Task StartAuthentication(string method)
+    {
+        CurrentStep = PasskeyStep.Processing;
+        ProcessingMessage = "Authenticating...";
+        IsBusy = true;
+        
+        try
+        {
+            await OnResult.InvokeAsync(new PasskeyResult 
+            { 
+                Type = PasskeyResultType.Authenticate, 
+                Method = method,
+                Email = Email
+            });
+            
+            // The parent component will handle the actual authentication
+            // and call back with the result
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error starting authentication: {ex}");
+            await ShowError("Authentication failed. Please try again.");
+        }
+    }
+    
+    private async Task CreatePasskey()
+    {
+        CurrentStep = PasskeyStep.Processing;
+        ProcessingMessage = "Creating passkey...";
+        IsBusy = true;
+        
+        try
+        {
+            await OnResult.InvokeAsync(new PasskeyResult 
+            { 
+                Type = PasskeyResultType.Register, 
+                Email = Email
+            });
+            
+            // The parent component will handle the actual registration
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error starting registration: {ex}");
+            await ShowError("Registration failed. Please try again.");
+        }
+    }
+    
+    private async Task ShowError(string message)
+    {
+        ErrorMessage = message;
+        CurrentStep = PasskeyStep.Error;
+        IsBusy = false;
+        await Task.CompletedTask;
+    }
+    
+    public async Task ShowRegistrationFlow(string email)
+    {
+        Email = email;
+        CurrentStep = PasskeyStep.Registering;
+        IsBusy = false;
+        await Task.CompletedTask;
+    }
+    
+    public async Task ShowAuthenticationFlow()
+    {
+        CurrentStep = PasskeyStep.Authenticating;
+        IsBusy = false;
+        await Task.CompletedTask;
+    }
+    
+    public async Task SetProcessing(string message)
+    {
+        ProcessingMessage = message;
+        CurrentStep = PasskeyStep.Processing;
+        await Task.CompletedTask;
+    }
+    
+    public async Task SetComplete()
+    {
+        IsBusy = false;
+        await Close();
+    }
+    
+    private async Task Close()
+    {
+        IsVisible = false;
+        await IsVisibleChanged.InvokeAsync(false);
+        await ResetState();
+    }
+    
+    private async Task Cancel()
+    {
+        await OnResult.InvokeAsync(new PasskeyResult { Type = PasskeyResultType.Cancelled });
+        await Close();
+    }
+    
+    private async Task Retry()
+    {
+        await InitializePasskeyFlow();
+    }
+    
+    private async Task HandleOverlayClick()
+    {
+        await Cancel();
+    }
+    
+    private async Task ResetState()
+    {
+        CurrentStep = PasskeyStep.Initializing;
+        IsBusy = false;
+        ErrorMessage = string.Empty;
+        ProcessingMessage = string.Empty;
+        AvailableMethods.Clear();
+        ShowQRCode = false;
+        await Task.CompletedTask;
+    }
+    
+    public enum PasskeyStep
+    {
+        Initializing,
+        Authenticating,
+        Registering,
+        Processing,
+        Error
+    }
+    
+    public class PasskeyResult
+    {
+        public PasskeyResultType Type { get; set; }
+        public string? Method { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public object? Credential { get; set; }
+        public string? Error { get; set; }
+    }
+    
+    public enum PasskeyResultType
+    {
+        Authenticate,
+        Register,
+        Cancelled,
+        Completed,
+        Error
+    }
+}

@@ -26,6 +26,8 @@ builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<AuthApi>();
 builder.Services.AddScoped<OtpService>();
+builder.Services.AddScoped<ApiClient>();
+builder.Services.AddScoped<WebAuthnClient>();
 
 
 // ---- HTTP: register the handler, then add it to a named client

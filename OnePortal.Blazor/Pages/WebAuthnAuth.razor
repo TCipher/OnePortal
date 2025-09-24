@@ -16,7 +16,18 @@ string? error;
 private async Task Go()
 {
         var email = Auth.GetPrincipal().Identity?.Name ?? await JS.InvokeAsync<string>("localStorage.getItem", "onep.email");
-var ok = await WebAuthn.AuthenticateAsync(email ?? string.Empty);
-if (ok) Nav.NavigateTo("/dashboard", true); else error = "Passkey auth failed";
+var result = await WebAuthn.AuthenticateAsync(email ?? string.Empty);
+if (result.Success) 
+{
+    Nav.NavigateTo("/dashboard", true);
+} 
+else if (result.NoPasskeysRegistered)
+{
+    error = "No passkeys registered. Please add a passkey first.";
+}
+else
+{
+    error = result.Error ?? "Passkey auth failed";
+}
 }
 }

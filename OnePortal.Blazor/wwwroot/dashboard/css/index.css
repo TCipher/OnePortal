@@ -1,0 +1,2064 @@
+﻿.wireframe13-container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+
+.wireframe13-wireframe13 {
+    width: 100%;
+    height: 1558px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    align-items: flex-start;
+    flex-shrink: 0;
+    background-color: rgba(242, 245, 253, 1);
+}
+
+.wireframe13-text10 {
+    top: 180px;
+    left: 335px;
+    color: rgba(0, 31, 87, 1);
+    width: 502px;
+    height: auto;
+    position: absolute;
+    font-size: 40px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-rectangle340 {
+    top: 276px;
+    left: 1083px;
+    width: 320px;
+    height: 802px;
+    position: absolute;
+    border-radius: 30px;
+}
+
+.wireframe13-text11 {
+    top: 316px;
+    left: 1113px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text12 {
+    top: 359px;
+    left: 1113px;
+    color: rgba(0, 31, 87, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text13 {
+    top: 630px;
+    left: 1113px;
+    color: rgba(0, 31, 87, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group11 {
+    top: 506px;
+    left: 1113px;
+    width: 164px;
+    height: 74px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-ellipse15 {
+    top: 6px;
+    left: 0px;
+    width: 63px;
+    height: 63px;
+    position: absolute;
+}
+
+.wireframe13-group5 {
+    top: 0px;
+    left: 78px;
+    width: 86px;
+    height: 74px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text14 {
+    top: 56px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text15 {
+    color: rgba(51, 51, 51, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text16 {
+    top: 28px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group12 {
+    top: 402px;
+    left: 1113px;
+    width: 232px;
+    height: 74px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-ellipse13 {
+    top: 6px;
+    left: 0px;
+    width: 63px;
+    height: 63px;
+    position: absolute;
+}
+
+.wireframe13-group6 {
+    top: 0px;
+    left: 78px;
+    width: 154px;
+    height: 74px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text17 {
+    top: 56px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text18 {
+    color: rgba(51, 51, 51, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text19 {
+    top: 28px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group10 {
+    top: 673px;
+    left: 1113px;
+    width: 196px;
+    height: 63px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text20 {
+    top: 9px;
+    left: 78px;
+    color: rgba(51, 51, 51, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-ellipse16 {
+    top: 0px;
+    left: 0px;
+    width: 63px;
+    height: 63px;
+    position: absolute;
+}
+
+.wireframe13-text21 {
+    top: 37px;
+    left: 78px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group9 {
+    top: 766px;
+    left: 1113px;
+    width: 190px;
+    height: 63px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text22 {
+    top: 9px;
+    left: 78px;
+    color: rgba(51, 51, 51, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-ellipse17 {
+    top: 0px;
+    left: 0px;
+    width: 63px;
+    height: 63px;
+    position: absolute;
+}
+
+.wireframe13-text23 {
+    top: 37px;
+    left: 78px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group8 {
+    top: 859px;
+    left: 1113px;
+    width: 193px;
+    height: 63px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text24 {
+    top: 9px;
+    left: 78px;
+    color: rgba(51, 51, 51, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-ellipse18 {
+    top: 0px;
+    left: 0px;
+    width: 63px;
+    height: 63px;
+    position: absolute;
+}
+
+.wireframe13-text25 {
+    top: 37px;
+    left: 78px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-frame34 {
+    top: 628px;
+    left: 335px;
+    width: 723px;
+    height: 455px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wireframe13-text26 {
+    top: 40px;
+    left: 30px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-rectangle344 {
+    top: 124px;
+    left: 474px;
+    width: 219px;
+    height: 291px;
+    position: absolute;
+    border-radius: 30px;
+}
+
+.wireframe13-text27 {
+    top: 83px;
+    left: 30px;
+    color: rgba(0, 31, 87, 1);
+    width: 275px;
+    height: auto;
+    position: absolute;
+    font-size: 25px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text28 {
+    top: 161px;
+    left: 30px;
+    color: var(--dl-color-default-body);
+    width: 401px;
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text29 {
+    top: 369px;
+    left: 30px;
+    color: var(--dl-color-default-body);
+    width: 396px;
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text30 {
+    top: 296px;
+    left: 30px;
+    color: var(--dl-color-default-body);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text31 {
+    top: 296px;
+    left: 110px;
+    color: var(--dl-color-default-body);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text32 {
+    top: 326px;
+    left: 110px;
+    color: var(--dl-color-default-body);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text33 {
+    top: 326px;
+    left: 30px;
+    color: var(--dl-color-default-body);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group237634 {
+    top: 63px;
+    left: 652px;
+    width: 41px;
+    height: 41px;
+    position: absolute;
+}
+
+.wireframe13-frame62 {
+    top: 40px;
+    left: 37px;
+    width: 273px;
+    height: 1462px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wireframe13-group2681 {
+    top: 175px;
+    left: 14px;
+    width: 228.35546875px;
+    height: 53px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-group2682 {
+    top: 0px;
+    left: 0px;
+    width: 228.35546875px;
+    height: 53px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-group267 {
+    top: 0px;
+    left: 0px;
+    width: 228.35546875px;
+    height: 53px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(0, 31, 87, 1);
+}
+
+.wireframe13-text34 {
+    top: 16px;
+    left: 55px;
+    color: rgba(255, 255, 255, 1);
+    width: 109px;
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-vector1 {
+    top: 18px;
+    left: 23.542627334594727px;
+    width: 19px;
+    height: 17px;
+    position: absolute;
+}
+
+.wireframe13-text35 {
+    top: 16px;
+    left: 55px;
+    color: rgba(255, 255, 255, 1);
+    width: 109px;
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group237632 {
+    top: 344px;
+    left: 40px;
+    width: 120px;
+    height: 25px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text36 {
+    top: 2px;
+    left: 37px;
+    color: var(--dl-color-default-subheading);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-fluentlaptopsettings32regular {
+    top: 0px;
+    left: 0px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+}
+
+.wireframe13-group237633 {
+    top: 273px;
+    left: 40px;
+    width: 108px;
+    height: 23px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text37 {
+    left: 37px;
+    color: var(--dl-color-default-subheading);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-vector2 {
+    top: 2px;
+    left: 0px;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+}
+
+.wireframe13-group237631 {
+    top: 414px;
+    left: 37px;
+    width: 141px;
+    height: 28px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-text38 {
+    top: 5px;
+    left: 40px;
+    color: var(--dl-color-default-subheading);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-tablerreport {
+    top: 0px;
+    left: 0px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-color: rgba(54, 54, 54, 0);
+    border-style: solid;
+    border-width: 1px;
+}
+
+.wireframe13-group {
+    top: 7px;
+    left: 3px;
+    width: 18px;
+    height: 19px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-vector3 {
+    top: 2px;
+    left: 0px;
+    width: 18px;
+    height: 16px;
+    position: absolute;
+}
+
+.wireframe13-vector4 {
+    top: 0px;
+    left: 4px;
+    width: 14px;
+    height: 19px;
+    position: absolute;
+}
+
+.wireframe13lfzlogo231 {
+    top: 50px;
+    left: 40px;
+    width: 164px;
+    height: 72px;
+    position: absolute;
+}
+
+.wireframe13-text39 {
+    top: 1258px;
+    left: 89px;
+    color: rgba(0, 31, 87, 1);
+    height: auto;
+    position: absolute;
+    font-size: 18px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text40 {
+    top: 1299px;
+    left: 33px;
+    color: var(--dl-color-default-subbody);
+    width: 208px;
+    height: auto;
+    position: absolute;
+    font-size: 18px;
+    font-style: Regular;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-frame65 {
+    gap: 10px;
+    top: 1361px;
+    left: 80px;
+    width: 114px;
+    display: flex;
+    padding: 10px 20px;
+    position: absolute;
+    align-items: center;
+    border-radius: 10px;
+    justify-content: center;
+    background-color: rgba(0, 31, 87, 1);
+}
+
+.wireframe13-text41 {
+    color: var(--dl-color-default-white);
+    height: auto;
+    font-size: 18px;
+    font-style: Bold;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-frame64 {
+    top: 276px;
+    left: 335px;
+    width: 723px;
+    height: 327px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wireframe13-text42 {
+    top: 40px;
+    left: 30px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-frame61 {
+    top: 40px;
+    left: 384.20513916015625px;
+    width: 300px;
+    height: 185px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    box-shadow: 0px 3.2332632541656494px 20px 0px rgba(0, 9, 26, 0.10000000149011612);
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 24.249473571777344px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wireframe13-frame23 {
+    gap: 8.083157539367676px;
+    top: 16.166446685791016px;
+    left: 19.012449264526367px;
+    width: 55px;
+    display: flex;
+    opacity: 0.80;
+    padding: 5.658210754394531px 12.124736785888672px;
+    position: absolute;
+    align-items: center;
+    border-radius: 40.41579055786133px;
+    justify-content: center;
+    background-color: rgba(242, 242, 242, 0.800000011920929);
+}
+
+.wireframe13-text43 {
+    color: rgba(134, 134, 134, 1);
+    height: auto;
+    font-size: 9.48717975616455px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-frame24 {
+    gap: 8.083157539367676px;
+    top: 16.166446685791016px;
+    left: 220.3161163330078px;
+    width: 60px;
+    display: flex;
+    opacity: 0.80;
+    padding: 5.658210754394531px 12.124736785888672px;
+    position: absolute;
+    align-items: center;
+    border-radius: 40.41579055786133px;
+    justify-content: center;
+    background-color: rgba(242, 242, 242, 0.800000011920929);
+}
+
+.wireframe13-text44 {
+    color: rgba(134, 134, 134, 1);
+    height: auto;
+    font-size: 9.48717975616455px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text45 {
+    top: 20.20777702331543px;
+    left: 105.94852447509766px;
+    color: rgba(51, 51, 51, 1);
+    height: auto;
+    position: absolute;
+    font-size: 11.384614944458008px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text46 {
+    top: 53.34916305541992px;
+    left: 19.595102310180664px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 10.508105278015137px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text47 {
+    top: 93.76471710205078px;
+    left: 23.636642456054688px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text48 {
+    top: 113.16400909423828px;
+    left: 23.636642456054688px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text49 {
+    top: 132.56329345703125px;
+    left: 23.636642456054688px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text50 {
+    top: 151.9636993408203px;
+    left: 23.636642456054688px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text51 {
+    top: 53.34916305541992px;
+    left: 59.27482986450195px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 10.508105278015137px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text52 {
+    top: 74.36543273925781px;
+    left: 64.93309020996094px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text53 {
+    top: 93.76471710205078px;
+    left: 64.93309020996094px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text54 {
+    top: 113.16400909423828px;
+    left: 64.93309020996094px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text55 {
+    top: 132.56329345703125px;
+    left: 64.93309020996094px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text56 {
+    top: 151.9636993408203px;
+    left: 64.93309020996094px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text57 {
+    top: 53.34916305541992px;
+    left: 103.27690124511719px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 10.508105278015137px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text58 {
+    top: 74.36543273925781px;
+    left: 107.31844329833984px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text59 {
+    top: 93.76471710205078px;
+    left: 107.31844329833984px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text60 {
+    top: 93.76471710205078px;
+    left: 228.39540100097656px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text61 {
+    top: 113.16400909423828px;
+    left: 107.31844329833984px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text62 {
+    top: 132.56329345703125px;
+    left: 107.31844329833984px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text63 {
+    top: 53.34916305541992px;
+    left: 142.28868103027344px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 10.508105278015137px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text64 {
+    top: 74.36543273925781px;
+    left: 148.7552032470703px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text65 {
+    top: 93.76471710205078px;
+    left: 148.7552032470703px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text66 {
+    top: 113.16400909423828px;
+    left: 148.7552032470703px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text67 {
+    top: 132.56329345703125px;
+    left: 148.7552032470703px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text68 {
+    top: 53.34916305541992px;
+    left: 186.00991821289062px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 10.508105278015137px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text69 {
+    top: 93.76471710205078px;
+    left: 190.05145263671875px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text70 {
+    top: 113.16400909423828px;
+    left: 190.05145263671875px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text71 {
+    top: 132.56329345703125px;
+    left: 190.05145263671875px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text72 {
+    top: 53.34916305541992px;
+    left: 226.7787628173828px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 10.508105278015137px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text73 {
+    top: 74.36543273925781px;
+    left: 228.39540100097656px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text74 {
+    top: 113.16400909423828px;
+    left: 228.39540100097656px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text75 {
+    top: 132.56329345703125px;
+    left: 228.39540100097656px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text76 {
+    top: 53.34916305541992px;
+    left: 261.7488708496094px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 10.508105278015137px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text77 {
+    top: 74.36543273925781px;
+    left: 264.9821472167969px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text78 {
+    top: 113.16400909423828px;
+    left: 264.9821472167969px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text79 {
+    top: 132.56329345703125px;
+    left: 264.9821472167969px;
+    color: rgba(54, 54, 54, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-ellipse29 {
+    top: 69.18343353271484px;
+    left: 185.64219665527344px;
+    width: 21px;
+    height: 21px;
+    position: absolute;
+}
+
+.wireframe13-ellipse31 {
+    top: 146.43826293945312px;
+    left: 102.62207794189453px;
+    width: 21px;
+    height: 21px;
+    position: absolute;
+}
+
+.wireframe13-ellipse30 {
+    top: 87.6323471069336px;
+    left: 260.5909118652344px;
+    width: 21px;
+    height: 21px;
+    position: absolute;
+}
+
+.wireframe13-text80 {
+    top: 74.36543273925781px;
+    left: 191.2045135498047px;
+    color: rgba(242, 242, 242, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Bold;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text81 {
+    top: 93.76471710205078px;
+    left: 266.1352233886719px;
+    color: rgba(242, 242, 242, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Bold;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text82 {
+    top: 151.9636993408203px;
+    left: 108.47146606445312px;
+    color: rgba(242, 242, 242, 1);
+    height: auto;
+    position: absolute;
+    font-size: 8.083157539367676px;
+    font-style: Bold;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-ellipse21 {
+    top: 89px;
+    left: 30px;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+}
+
+.wireframe13-ellipse22 {
+    top: 160px;
+    left: 30px;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+}
+
+.wireframe13-ellipse23 {
+    top: 231px;
+    left: 30px;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+}
+
+.wireframe13-text83 {
+    top: 154px;
+    left: 55px;
+    color: rgba(41, 41, 41, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text84 {
+    top: 225px;
+    left: 55px;
+    color: rgba(41, 41, 41, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text85 {
+    top: 83px;
+    left: 55px;
+    color: rgba(41, 41, 41, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text86 {
+    top: 258px;
+    left: 55px;
+    color: var(--dl-color-default-subbody);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text87 {
+    top: 187px;
+    left: 55px;
+    color: var(--dl-color-default-subbody);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text88 {
+    top: 116px;
+    left: 55px;
+    color: var(--dl-color-default-subbody);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-group306 {
+    top: 40px;
+    left: 335px;
+    width: 1068px;
+    height: 90px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-group270 {
+    top: 0px;
+    left: 0px;
+    width: 1068px;
+    height: 90px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(0, 31, 87, 1);
+}
+
+.wireframe13-text89 {
+    top: 34px;
+    left: 823.1213989257812px;
+    color: rgba(255, 255, 255, 1);
+    width: 166px;
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text90 {
+    top: 22px;
+    left: 30.86705780029297px;
+    color: rgba(255, 255, 255, 1);
+    width: 212px;
+    height: auto;
+    position: absolute;
+    font-size: 40px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-frame67 {
+    top: 22px;
+    left: 999.0635986328125px;
+    width: 48.35837936401367px;
+    height: 47px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+
+.wireframe13-group237629 {
+    top: 0px;
+    left: 0px;
+    width: 48.58477783203125px;
+    height: 47px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-ellipse10 {
+    top: 0px;
+    left: 0px;
+    width: 49px;
+    height: 47px;
+    position: absolute;
+}
+
+.wireframe13-vector5 {
+    top: 11.2421875px;
+    left: 13.375724792480469px;
+    width: 23px;
+    height: 25px;
+    position: absolute;
+}
+
+.wireframe13-frame68 {
+    top: 1108px;
+    left: 335px;
+    width: 723px;
+    height: 392px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wireframe13-text91 {
+    top: 40px;
+    left: 30px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-maskgroup1 {
+    top: 83px;
+    left: 183px;
+    width: 358px;
+    height: 268px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.wireframe13-pg16tsc1 {
+    top: 0px;
+    left: -22px;
+    width: 402px;
+    height: 268px;
+    position: absolute;
+}
+
+.wireframe13-maskgroup2 {
+    top: 109px;
+    left: 30px;
+    width: 128px;
+    height: 216px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.wireframe13-maskgroup3 {
+    top: 0px;
+    left: -21.442306518554688px;
+    width: 207.6923065185547px;
+    height: 216px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.wireframe13-rectangle497 {
+    top: -9.094947017729282e-13px;
+    left: 2.9802322387695312e-8px;
+    width: 208px;
+    height: 216px;
+    position: absolute;
+    border-radius: 11.035714149475098px;
+}
+
+.wireframe13aug1589 {
+    top: -1.8189894035458565e-12px;
+    left: -10.681316375732422px;
+    width: 334px;
+    height: 223px;
+    position: absolute;
+}
+
+.wireframe13-maskgroup4 {
+    top: 109px;
+    left: 566px;
+    width: 128px;
+    height: 216px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.wireframe13a060 {
+    top: -22px;
+    left: -111px;
+    width: 371px;
+    height: 248px;
+    position: absolute;
+}
+
+.wireframe13-frame69 {
+    top: 1103px;
+    left: 1083px;
+    width: 320px;
+    height: 392px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wireframe13-text92 {
+    top: 40px;
+    left: 30px;
+    color: rgba(89, 89, 89, 1);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text93 {
+    top: 83px;
+    left: 30px;
+    color: var(--dl-color-default-primary);
+    width: 257px;
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text96 {
+    top: 135px;
+    left: 30px;
+    color: var(--dl-color-default-primary);
+    width: 177px;
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text99 {
+    top: 187px;
+    left: 30px;
+    color: var(--dl-color-default-primary);
+    width: 93px;
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text100 {
+    top: 239px;
+    left: 30px;
+    color: var(--dl-color-default-primary);
+    width: 93px;
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-text103 {
+    top: 291px;
+    left: 30px;
+    color: var(--dl-color-default-primary);
+    width: 93px;
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-frame70 {
+    top: 170px;
+    left: 1083px;
+    width: 320px;
+    height: 66px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wireframe13-text106 {
+    top: 21px;
+    left: 62px;
+    color: var(--dl-color-default-placeholder);
+    height: auto;
+    position: absolute;
+    font-size: 20px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Ubuntu;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+}
+
+.wireframe13-vector6 {
+    top: 21px;
+    left: 30px;
+    width: 22px;
+    height: 25px;
+    position: absolute;
+}

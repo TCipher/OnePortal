@@ -1,0 +1,108 @@
+@namespace OnePortal.Blazor.Components.Common
+@using OnePortal.Blazor.Models
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="portal-sidebar">
+    <!-- LFZ Logo -->
+    <div class="sidebar-header">
+        <div class="logo-container">
+            <img src="/dashboard/images/lfzlogo2311369-yexx-200h.png" alt="Lagos Free Zone" class="logo" />
+            <span class="logo-text">Lagos Free Zone</span>
+        </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="sidebar-nav">
+        <div class="nav-item @(IsActive("dashboard") ? "active" : "")" @onclick="@(() => NavigateToPortal("dashboard"))">
+            <div class="nav-icon">
+                <svg width="20" height="17" viewBox="0 0 20 17" fill="none">
+                    <path d="M1 8.5L8.5 1L16 8.5L8.5 16L1 8.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <span class="nav-text">Dashboard</span>
+        </div>
+
+        @if (Portals != null)
+        {
+            @foreach (var portal in Portals)
+            {
+                <div class="nav-item @(IsActive(portal.Code) ? "active" : "")" @onclick="@(() => NavigateToPortal(portal.Code))">
+                    <div class="nav-icon">
+                        @if (!string.IsNullOrEmpty(portal.IconSvg))
+                        {
+                            @((MarkupString)portal.IconSvg)
+                        }
+                        else
+                        {
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 2L3 7V18H17V7L10 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        }
+                    </div>
+                    <span class="nav-text">@portal.Name</span>
+                </div>
+            }
+        }
+    </nav>
+
+    <!-- Help Section -->
+    <div class="sidebar-help">
+        <div class="help-content">
+            <h3 class="help-title">Need help?</h3>
+            <p class="help-text">Our support team is here For you</p>
+            <button class="help-button" @onclick="ShowHelp">
+                Get help
+            </button>
+        </div>
+    </div>
+
+    @if (ShowLogout)
+    {
+        <div class="sidebar-footer">
+            <button class="logout-button" @onclick="OnLogout">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Logout
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public IEnumerable<PortalNavItem>? Portals { get; set; }
+    [Parameter] public bool ShowLogout { get; set; } = true;
+    [Parameter] public EventCallback OnLogout { get; set; }
+    [Parameter] public EventCallback<string> OnPortalSelected { get; set; }
+
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
+
+    private string currentPortal = "dashboard";
+
+    private bool IsActive(string portalCode)
+    {
+        return currentPortal.Equals(portalCode, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private async Task NavigateToPortal(string portalCode)
+    {
+        currentPortal = portalCode;
+        
+        if (portalCode == "dashboard")
+        {
+            Navigation.NavigateTo("/dashboard");
+        }
+        else
+        {
+            await OnPortalSelected.InvokeAsync(portalCode);
+        }
+    }
+
+    private void ShowHelp()
+    {
+        // TODO: Implement help functionality
+    }
+}

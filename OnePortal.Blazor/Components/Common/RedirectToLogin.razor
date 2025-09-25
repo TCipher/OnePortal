@@ -1,0 +1,17 @@
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager Nav
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Immediately redirect the user to the login page when this component
+        // is rendered.  Using the "replace" option prevents the user from
+        // being able to navigate back to the protected page via the browser
+        // history once they sign in.
+        Nav.NavigateTo("/login", replace: true);
+    }
+}
+
+<!-- This component intentionally renders nothing.  Its sole purpose is to
+     perform a redirect during the rendering of the NotAuthorized section in
+     the AuthorizeRouteView.  -->

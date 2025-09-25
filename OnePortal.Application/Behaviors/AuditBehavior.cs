@@ -6,7 +6,7 @@ using OnePortal.Domain.Entities; // keep this if AuditLog is in Domain
 
 namespace OnePortal.Application.Common.Behaviors;
 
-public class AuditBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class AuditBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     private static readonly JsonSerializerOptions JsonOpts = new(JsonSerializerDefaults.Web)
     {
@@ -75,8 +75,9 @@ public class AuditBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TR
         return "Unknown";
     }
 
-    private static void SetOptionalIdsFromRequest(object req, AuditLog log)
+    private static void SetOptionalIdsFromRequest(object? req, AuditLog log)
     {
+        if (req == null) return;
         var t = req.GetType();
 
         var idProp = t.GetProperty("Id") ?? t.GetProperty("EntityId");

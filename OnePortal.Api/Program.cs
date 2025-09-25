@@ -168,6 +168,8 @@ builder.Services.AddCors(o => o.AddPolicy("spa", p => p
 
 var app = builder.Build();
 
+// Browser link is disabled by default in .NET 8+ to avoid connection issues
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<OnePortalDbContext>();
@@ -197,6 +199,10 @@ app.UseAuthorization();
 app.UseHangfireDashboard("/hangfire");
 
 app.MapControllers();
+
+// Add health check endpoint that doesn't require authentication
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }))
+   .AllowAnonymous();
 
 app.Run();
 

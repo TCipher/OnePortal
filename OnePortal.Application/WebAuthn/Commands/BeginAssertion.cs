@@ -57,6 +57,7 @@ public class BeginAssertionHandler : IRequestHandler<BeginAssertionCommand, obje
         Console.WriteLine($"[BeginAssertionHandler] Options JSON length: {optionsJson?.Length ?? 0}");
 
         // 4. Store challenge for verification step
+        if (optionsJson == null) throw new InvalidOperationException("Failed to generate assertion options");
         await _challenge.StoreAsync(
             $"webauthn:assertion:{r.Email}",
             optionsJson,

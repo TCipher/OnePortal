@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace OnePortal.Blazor.Services.Http
 {
-    public class ApiClient
+    public partial class ApiClient
     {
         private readonly HttpClient _http;
         public ApiClient(HttpClient http) => _http = http;

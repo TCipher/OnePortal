@@ -58,7 +58,7 @@ public class PasskeyAuthenticateWithFallbackHandler : IRequestHandler<PasskeyAut
         }
         else
         {
-            Console.WriteLine($"[PasskeyAuthenticateWithFallback] Found existing user: {user.EmailAddress}, Active: {user.IsActive}");
+            Console.WriteLine($"[PasskeyAuthenticateWithFallback] Found existing user: {user?.EmailAddress}, Active: {user?.IsActive}");
             
             if (!user.IsActive)
             {

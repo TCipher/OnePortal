@@ -21,7 +21,7 @@ public class UserDetails : BaseEntity, ISoftDeletable
     public Designation? Designation { get; set; }
     public DateOnly? BirthDate { get; set; }
     public int DepartmentId { get; set; }
-    public Department Department { get; set; }
+    public Department Department { get; set; } = null!;
     public int? SubDepartmentId { get; set; }
     public SubDepartment? SubDepartment { get; set; }
     public DateOnly? EngageDate { get; set; }

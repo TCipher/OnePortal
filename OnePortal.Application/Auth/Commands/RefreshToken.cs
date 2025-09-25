@@ -28,6 +28,7 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, LoginRes
         if (!rotated.ok) throw new UnauthorizedAccessException("Invalid refresh token");
 
         var user = await _user.GetByIdAsync(rotated.userId,ct);
+        if (user == null) throw new UnauthorizedAccessException("User not found");
         var roleCode = user.Role?.Code ?? GlobalRoleCodes.User;
         var fullName = string.Join(" ", new[] { user.FirstName, user.MiddleName, user.LastName }.Where(x => !string.IsNullOrWhiteSpace(x)));
 

@@ -9,7 +9,7 @@
     public record ApiError(string Code, string Message, object? Details = null);
 
 
-    public record ChangePasswordRequest(string CurrentPassword, string NewPassword);
+    public record ChangePasswordRequest(string Email, string CurrentPassword, string NewPassword);
     public record ApiResult(bool Ok, string? Error);
 
 
@@ -33,4 +33,6 @@
         public static WebAuthnResult CreateFailed(string error) => new(false, error, false);
         public static WebAuthnResult CreateNoPasskeysRegistered() => new(false, "No passkeys registered", true);
     }
+    
+
 }

@@ -20,9 +20,9 @@ var apiBaseUrl = builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7082/
 
 // ---- Core auth services
 builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<JwtAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<JwtAuthStateProvider>());
-builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<AuthApi>();
 builder.Services.AddScoped<OtpService>();

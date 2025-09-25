@@ -1,0 +1,210 @@
+.portal-sidebar {
+    width: 273px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: fixed;
+    left: 37px;
+    top: 40px;
+    box-shadow: 0px 4px 20px rgba(0, 9, 26, 0.1);
+    z-index: 1000;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.sidebar-header {
+    padding: 50px 40px 0;
+    margin-bottom: 50px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 164px;
+    height: 72px;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #001f57;
+    margin-left: 8px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 0 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.nav-item:hover {
+    background-color: #f5f5f5;
+}
+
+.nav-item.active {
+    background-color: #001f57;
+    color: white;
+}
+
+.nav-item.active .nav-text {
+    color: white;
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #585858;
+}
+
+.nav-item.active .nav-icon {
+    color: white;
+}
+
+.nav-text {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #585858;
+    transition: color 0.3s ease;
+}
+
+.sidebar-help {
+    padding: 40px 33px;
+    margin-top: auto;
+}
+
+.help-content {
+    text-align: center;
+}
+
+.help-title {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #001f57;
+    margin: 0 0 8px 0;
+}
+
+.help-text {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #595959;
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+}
+
+.help-button {
+    background-color: #001f57;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 114px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-button:hover {
+    background-color: #002b82;
+}
+
+.sidebar-footer {
+    padding: 20px 40px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: #585858;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+    width: 100%;
+}
+
+.logout-button:hover {
+    color: #001f57;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .portal-sidebar {
+        width: 250px;
+        left: 20px;
+    }
+    
+    .logo {
+        width: 140px;
+        height: 60px;
+    }
+    
+    .nav-text {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .portal-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        left: 0;
+        top: 0;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .sidebar-header {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .sidebar-nav {
+        padding: 0 20px;
+    }
+    
+    .sidebar-help {
+        padding: 20px;
+    }
+}

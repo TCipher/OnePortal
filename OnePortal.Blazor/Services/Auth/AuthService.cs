@@ -108,6 +108,8 @@ namespace OnePortal.Blazor.Services.Auth
 
         public ClaimsPrincipal GetPrincipal() => _state.CurrentUser ?? new ClaimsPrincipal(new ClaimsIdentity());
 
+        public async Task<string?> GetEmailFromStorageAsync() => await GetLocal(EmailKey);
+
         public async Task SetTokensAsync(string accessToken, string? refreshToken = null)
         {
             await SetLocal(AccessKey, accessToken);

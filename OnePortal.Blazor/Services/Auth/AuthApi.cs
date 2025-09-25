@@ -1,9 +1,10 @@
 ﻿using OnePortal.Blazor.Models;
 using OnePortal.Blazor.Services.Http;
+using static System.Net.WebRequestMethods;
 
 namespace OnePortal.Blazor.Services.Auth
 {
-    public class AuthApi
+    public partial class AuthApi
     {
         private readonly ApiClient _api;
         public AuthApi(HttpClient http) => _api = new ApiClient(http);
@@ -14,7 +15,7 @@ namespace OnePortal.Blazor.Services.Auth
 
 
         public Task<ApiResult?> ChangePasswordAsync(ChangePasswordRequest r, CancellationToken ct = default)
-        => _api.PostApiResponseAsync<ApiResult>("api/auth/change-password", r, ct);
+        => _api.PostApiResponseAsync<ApiResult>("api/account/change-password", r, ct);
 
 
         public Task<ApiResult?> SendEmailOtpAsync(SendOtpRequest r, CancellationToken ct = default)
@@ -55,4 +56,5 @@ namespace OnePortal.Blazor.Services.Auth
         public Task<ApiResult?> ResetPasswordAsync(ResetPasswordRequest r, CancellationToken ct = default)
         => _api.PostApiResponseAsync<ApiResult>("api/auth/reset-password", r, ct);
     }
+
 }

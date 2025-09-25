@@ -1,0 +1,40 @@
+﻿@using OnePortal.Blazor.Models
+
+@if (Portals is null)
+{
+    <div class="sidebar loading">Loading portals…</div>
+}
+else
+{
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <span class="title">Portals</span>
+        </div>
+
+        <ul class="portal-list">
+            @foreach (var p in Portals)
+            {
+                <li class="portal-item">
+                    <a href="@p.Url" target="_self">
+                        <span class="icon">@((MarkupString)(p.IconSvg ?? ""))</span>
+                        <span class="name">@p.Name</span>
+                    </a>
+                </li>
+            }
+        </ul>
+        @if (ShowLogout)
+        {
+            <div class="sidebar-footer">
+                <button class="btn-logout" @onclick="OnLogoutClicked">Logout</button>
+            </div>
+        }
+    </aside>
+}
+
+@code {
+    [Parameter] public IEnumerable<PortalNavItem>? Portals { get; set; }
+    [Parameter] public EventCallback OnLogout { get; set; }
+    [Parameter] public bool ShowLogout { get; set; } = false;
+
+    private Task OnLogoutClicked() => OnLogout.InvokeAsync();
+}

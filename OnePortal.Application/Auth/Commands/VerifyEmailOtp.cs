@@ -33,6 +33,7 @@ public class VerifyEmailOtpHandler : IRequestHandler<VerifyEmailOtpCommand, Logi
         if (!ok) throw new UnauthorizedAccessException("Invalid/expired OTP");
 
         var user = await _uow.Users.GetByEmailAsync(r.Email, ct);
+        if (user == null) throw new UnauthorizedAccessException("User not found");
 
         var roleCode = user.Role?.Code ?? GlobalRoleCodes.User;
         var fullName = $"{user.FirstName} {(user.MiddleName ?? "")} {user.LastName}".Trim();

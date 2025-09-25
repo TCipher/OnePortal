@@ -1,10 +1,21 @@
 ﻿@using  OnePortal.Blazor.Pages
 
 <CascadingAuthenticationState>
-<ErrorBoundary>
+    <ErrorBoundary>
         <Router AppAssembly="@typeof(App).Assembly">
             <Found Context="routeData">
-                <RouteView RouteData="routeData" DefaultLayout="@typeof(MainLayout)" />
+                <AuthorizeRouteView RouteData="routeData" DefaultLayout="@typeof(MainLayout)">
+                    <NotAuthorized>
+                        @* When the user is not authorised to view the route,
+                           navigate them to the login page instead of rendering
+                           the protected component.  We use a small helper
+                           component here to perform the redirect. *@
+                        <RedirectToLogin />
+                    </NotAuthorized>
+                    <Authorizing>
+                        <div>Loading...</div>
+                    </Authorizing>
+                </AuthorizeRouteView>
             </Found>
             <NotFound>
                 <LayoutView Layout="@typeof(MainLayout)">
@@ -12,6 +23,5 @@
                 </LayoutView>
             </NotFound>
         </Router>
-
-</ErrorBoundary>
+    </ErrorBoundary>
 </CascadingAuthenticationState>

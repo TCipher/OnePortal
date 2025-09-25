@@ -138,7 +138,7 @@ public class WebAuthnProvider : IWebAuthnProvider
         Console.WriteLine($"[WebAuthnProvider] Serialized options JSON length: {json?.Length ?? 0}");
         Console.WriteLine($"[WebAuthnProvider] Serialized options JSON: {json}");
 
-        return Task.FromResult(json); // or JsonSerializer.Serialize(options)
+        return Task.FromResult(json ?? string.Empty); // or JsonSerializer.Serialize(options)
     }
 
     public async Task<uint> VerifyAssertionAsync(

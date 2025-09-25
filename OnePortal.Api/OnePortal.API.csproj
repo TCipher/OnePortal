@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>99a9de58-fdfc-48e3-93f6-81024489935f</UserSecretsId>
+    <UseBrowserLink>false</UseBrowserLink>
   </PropertyGroup>
 
   <ItemGroup>

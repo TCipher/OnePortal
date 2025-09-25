@@ -1,4 +1,5 @@
 ﻿@page "/mfa/email"
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 @layout EmptyLayout
 @inject OnePortal.Blazor.Services.Auth.AuthService Auth
 @inject OnePortal.Blazor.Services.Auth.OtpService Otp

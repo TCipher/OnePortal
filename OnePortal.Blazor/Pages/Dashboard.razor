@@ -1,59 +1,139 @@
 ﻿@page "/dashboard"
-@using OnePortal.Blazor.Services.Auth
-@inject AuthService Auth
+@layout EmptyLayout
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+@using System.Security.Claims
+@using System.Linq
+@using OnePortal.Blazor.Services
+@using OnePortal.Blazor.Models
+@using OnePortal.Blazor.Components.Common
+@inject OnePortal.Blazor.Services.Auth.AuthService AuthState
+@inject OnePortal.Blazor.Services.Auth.AuthApi Api
 @inject NavigationManager Nav
+@inject IJSRuntime JS
+@inject ILogger<Dashboard> Logger
 
-<PageTitle>Dashboard - OnePortal</PageTitle>
+<link rel="stylesheet" href="/dashboard/css/styles.css" />
+<link rel="stylesheet" href="/dashboard/css/index.css" />
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="mb-0">Dashboard</h1>
-                <div>
-                    <button class="btn btn-outline-primary me-2" @onclick="GoToSecurity">
-                        <i class="fas fa-shield-alt me-2"></i>Security Settings
-                    </button>
-                    <button class="btn btn-outline-secondary" @onclick="Logout">
-                        <i class="fas fa-sign-out-alt me-2"></i>Logout
-                    </button>
+<div class="dashboard-container">
+    <PortalSidebar Portals="portals" ShowLogout="true" OnLogout="Logout" OnPortalSelected="HandlePortalSelected" />
+
+    <main class="dashboard-main">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1 class="dashboard-title">Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-avatar">@initials</span>
+                    <span class="user-name">@displayName</span>
                 </div>
             </div>
-        </div>
-    </div>
+        </header>
 
-    <div class="row">
-        <div class="col-lg-8">
-            <!-- Welcome Card -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">
-                        <i class="fas fa-home me-2"></i>Welcome to OnePortal
-                    </h5>
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <h2 class="welcome-text">Welcome to ONE PORTAL</h2>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <svg class="search-icon" width="22" height="25" viewBox="0 0 22 25" fill="none">
+                    <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input type="text" placeholder="Search" class="search-input" />
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Row 1: Upcoming Events and Employee Update -->
+            <div class="dashboard-row">
+                <div class="dashboard-card upcoming-events">
+                    <h3 class="card-title">Upcoming Events</h3>
+                    <div class="events-list">
+                        <div class="event-item">
+                            <div class="event-dot"></div>
+                            <div class="event-details">
+                                <span class="event-name">Quarterly Staff Meeting</span>
+                                <span class="event-date">Sept 04</span>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-dot"></div>
+                            <div class="event-details">
+                                <span class="event-name">World Safety Day</span>
+                                <span class="event-date">Sept 13</span>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-dot"></div>
+                            <div class="event-details">
+                                <span class="event-name">September Birthday Celebrants</span>
+                                <span class="event-date">Sept 30</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calendar-widget">
+                        <div class="calendar-header">September 2023</div>
+                        <div class="calendar-dates">
+                            <div class="calendar-date highlighted">4</div>
+                            <div class="calendar-date highlighted">13</div>
+                            <div class="calendar-date highlighted">30</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="mb-3">Welcome back! You have successfully logged into the OnePortal system.</p>
+
+                <div class="dashboard-card employee-update">
+                    <h3 class="card-title">Employee Update</h3>
                     
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="bg-success rounded-circle p-2 me-3">
-                                    <i class="fas fa-check text-white"></i>
+                    <div class="update-section">
+                        <h4 class="section-title">Birthdays</h4>
+                        <div class="employee-list">
+                            <div class="employee-item">
+                                <div class="employee-avatar blue"></div>
+                                <div class="employee-details">
+                                    <span class="employee-name">Emmanuel Enwerem</span>
+                                    <span class="employee-dept">Finance</span>
+                                    <span class="employee-date">August 20</span>
                                 </div>
-                                <div>
-                                    <h6 class="mb-0">Authentication</h6>
-                                    <small class="text-muted">Successfully signed in</small>
+                            </div>
+                            <div class="employee-item">
+                                <div class="employee-avatar pink"></div>
+                                <div class="employee-details">
+                                    <span class="employee-name">John Alade</span>
+                                    <span class="employee-dept">QA/QC</span>
+                                    <span class="employee-date">August 20</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="bg-info rounded-circle p-2 me-3">
-                                    <i class="fas fa-user text-white"></i>
+                    </div>
+
+                    <div class="update-section">
+                        <h4 class="section-title">New Staff</h4>
+                        <div class="employee-list">
+                            <div class="employee-item">
+                                <div class="employee-avatar blue"></div>
+                                <div class="employee-details">
+                                    <span class="employee-name">Ehis Osarlemen</span>
+                                    <span class="employee-dept">Operations</span>
                                 </div>
-                                <div>
-                                    <h6 class="mb-0">User Profile</h6>
-                                    <small class="text-muted">@GetUserEmail()</small>
+                            </div>
+                            <div class="employee-item">
+                                <div class="employee-avatar pink"></div>
+                                <div class="employee-details">
+                                    <span class="employee-name">Chisom Nwoka</span>
+                                    <span class="employee-dept">IT</span>
+                                </div>
+                            </div>
+                            <div class="employee-item">
+                                <div class="employee-avatar blue"></div>
+                                <div class="employee-details">
+                                    <span class="employee-name">Vanessa Obaze</span>
+                                    <span class="employee-dept">Admin</span>
                                 </div>
                             </div>
                         </div>
@@ -61,166 +141,196 @@
                 </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        <i class="fas fa-bolt me-2"></i>Quick Actions
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <button class="btn btn-outline-primary w-100 h-100 d-flex flex-column align-items-center py-3" @onclick="GoToSecurity">
-                                <i class="fas fa-key fa-2x mb-2"></i>
-                                <span>Manage Passkeys</span>
-                                <small class="text-muted">Set up secure authentication</small>
-                            </button>
+            <!-- Row 2: Latest News -->
+            <div class="dashboard-row">
+                <div class="dashboard-card latest-news">
+                    <h3 class="card-title">Latest News</h3>
+                    <div class="news-content">
+                        <div class="news-text">
+                            <h4 class="news-title">Lagos Free Zone Football Championship</h4>
+                            <p class="news-body">The Lagos Free Zone Football Championship is almost here, and the excitement is building. This is more than just a game it's a celebration of skill, teamwork, and community spirit</p>
+                            <div class="news-details">
+                                <span class="news-venue">Venue: LFZ Football Pitch</span>
+                                <span class="news-date">Date: August 21st 2025</span>
+                            </div>
+                            <p class="news-cta">Bring your friends, bring your energy, and let's kick off the championship in style!</p>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <button class="btn btn-outline-info w-100 h-100 d-flex flex-column align-items-center py-3" @onclick="GoToWeather">
-                                <i class="fas fa-cloud fa-2x mb-2"></i>
-                                <span>Weather</span>
-                                <small class="text-muted">Check weather information</small>
-                            </button>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <button class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center py-3" @onclick="GoToCounter">
-                                <i class="fas fa-calculator fa-2x mb-2"></i>
-                                <span>Counter</span>
-                                <small class="text-muted">Test application features</small>
-                            </button>
+                        <div class="news-image">
+                            <img src="/dashboard/images/pg16tsc11369-r6vc-500w.png" alt="Football Championship" />
+                            <div class="news-arrow">
+                                <svg width="41" height="41" viewBox="0 0 41 41" fill="none">
+                                    <path d="M20.5 0L41 20.5L20.5 41L0 20.5L20.5 0Z" fill="#001F57"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4">
-            <!-- Security Status -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-header">
-                    <h6 class="mb-0">
-                        <i class="fas fa-shield-alt me-2"></i>Security Status
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="bg-success rounded-circle p-2 me-3">
-                            <i class="fas fa-check text-white"></i>
+            <!-- Row 3: Gallery and Helpful Links -->
+            <div class="dashboard-row">
+                <div class="dashboard-card gallery">
+                    <h3 class="card-title">Gallery</h3>
+                    <div class="gallery-images">
+                        <div class="gallery-item">
+                            <img src="/dashboard/images/a0601369-rw09-400w.png" alt="Gallery Image 1" />
                         </div>
-                        <div>
-                            <h6 class="mb-0">Account Secure</h6>
-                            <small class="text-muted">Your account is protected</small>
+                        <div class="gallery-item">
+                            <img src="/dashboard/images/aug15891369-3s4j-400w.png" alt="Gallery Image 2" />
+                        </div>
+                        <div class="gallery-item">
+                            <img src="/dashboard/images/rectangle4971369-qn7q-300h.png" alt="Gallery Image 3" />
                         </div>
                     </div>
-                    
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="bg-warning rounded-circle p-2 me-3">
-                            <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                        <div>
-                            <h6 class="mb-0">Passkeys</h6>
-                            <small class="text-muted">Set up for easier login</small>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary w-100" @onclick="GoToSecurity">
-                        <i class="fas fa-cog me-2"></i>Manage Security
-                    </button>
                 </div>
-            </div>
 
-            <!-- Recent Activity -->
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h6 class="mb-0">
-                        <i class="fas fa-clock me-2"></i>Recent Activity
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-marker bg-success"></div>
-                            <div class="timeline-content">
-                                <h6 class="mb-0">Login Successful</h6>
-                                <small class="text-muted">Just now</small>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker bg-info"></div>
-                            <div class="timeline-content">
-                                <h6 class="mb-0">Session Started</h6>
-                                <small class="text-muted">Just now</small>
-                            </div>
-                        </div>
+                <div class="dashboard-card helpful-links">
+                    <h3 class="card-title">Helpful Links</h3>
+                    <div class="links-list">
+                        <a href="#" class="helpful-link">Environment Management Policy</a>
+                        <a href="#" class="helpful-link">Business Ethics Policy</a>
+                        <a href="#" class="helpful-link">CSR Policy</a>
+                        <a href="#" class="helpful-link">OHS Policy</a>
+                        <a href="#" class="helpful-link">Reports</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </div>
 
-<style>
-    .timeline {
-        position: relative;
-        padding-left: 30px;
-    }
-
-    .timeline-item {
-        position: relative;
-        margin-bottom: 20px;
-    }
-
-    .timeline-marker {
-        position: absolute;
-        left: -25px;
-        top: 5px;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-    }
-
-    .timeline-content {
-        padding-left: 10px;
-    }
-
-    .timeline::before {
-        content: '';
-        position: absolute;
-        left: -20px;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background: #e9ecef;
-    }
-</style>
-
 @code {
-    private string GetUserEmail()
+    private List<PortalNavItem>? portals;
+    private string initials = "U";
+    private string? displayName;
+    private string? displayEmail;
+
+    // The first name of the authenticated user.  If the token contains a
+    // given-name claim we use that; otherwise it is derived by splitting
+    // the full name on spaces and taking the first segment.  DisplayName
+    // will fall back to this value.
+    private string? firstName;
+
+    protected override async Task OnInitializedAsync()
     {
-        var principal = Auth.GetPrincipal();
-        return principal?.Identity?.Name ?? "Unknown User";
+        try
+        {
+            var user = AuthState.GetPrincipal();
+            
+            // Only proceed if user is authenticated
+            if (user?.Identity?.IsAuthenticated != true)
+            {
+                // User not authenticated, use defaults
+                displayName = "User";
+                displayEmail = "";
+                initials = "U";
+                portals = GetDefaultPortals();
+                return;
+            }
+
+            // Extract the first name from the JWT claims.  Use ClaimTypes.GivenName
+            // when available (see JwtTokenService for details) and fall back
+            // to parsing the full name or email address.  DisplayName is set
+            // to the first name by default.
+            firstName = GetFirstName(user);
+            var fullName = GetName(user);
+            displayEmail = GetEmail(user);
+            displayName = firstName ?? fullName ?? displayEmail ?? "User";
+
+            // Compute initials from either the full name or email when the
+            // user has not supplied a name.  This ensures the avatar is
+            // never blank.
+            initials = GetInitials(fullName ?? displayEmail);
+
+            // Only call API if user is authenticated
+            portals = await Api.GetMyPortalsAsync(user) ?? new();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load dashboard.");
+            // Fallback to defaults on error
+            displayName = "User";
+            displayEmail = "";
+            initials = "U";
+            portals = GetDefaultPortals();
+        }
     }
 
-    private void GoToSecurity()
+    private static List<PortalNavItem> GetDefaultPortals()
     {
-        Nav.NavigateTo("/security");
+        return new List<PortalNavItem>
+        {
+            new("MEDICAL", "Medical", "/medical", GetPortalIcon("MEDICAL")),
+            new("ESERVICE", "E-Service", "/eservice", GetPortalIcon("ESERVICE")),
+            new("REGULATORY", "Regulatory", "/regulatory", GetPortalIcon("REGULATORY"))
+        };
     }
 
-    private void GoToWeather()
+    private static string? GetPortalIcon(string portalCode)
     {
-        Nav.NavigateTo("/weather");
+        return portalCode.ToUpper() switch
+        {
+            "MEDICAL" => @"<svg width=""20"" height=""20"" viewBox=""0 0 20 20"" fill=""none"">
+                <path d=""M10 2L3 7V18H17V7L10 2Z"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""/>
+                <path d=""M10 7V12"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""/>
+                <path d=""M7 9.5H13"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""/>
+            </svg>",
+            "ESERVICE" => @"<svg width=""20"" height=""20"" viewBox=""0 0 20 20"" fill=""none"">
+                <rect x=""2"" y=""3"" width=""16"" height=""14"" rx=""2"" stroke=""currentColor"" stroke-width=""2""/>
+                <path d=""M8 21L12 17L8 13"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""/>
+            </svg>",
+            "REGULATORY" => @"<svg width=""20"" height=""20"" viewBox=""0 0 20 20"" fill=""none"">
+                <path d=""M9 12L11 14L15 10"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""/>
+                <path d=""M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"" stroke=""currentColor"" stroke-width=""2""/>
+            </svg>",
+            _ => null
+        };
     }
 
-    private void GoToCounter()
+    private static string? GetName(ClaimsPrincipal user)
+        => user?.FindFirst(ClaimTypes.Name)?.Value
+           ?? user?.FindFirst("name")?.Value
+           ?? user?.FindFirst("preferred_username")?.Value;
+
+    private static string? GetFirstName(ClaimsPrincipal user)
+        => user?.FindFirst(ClaimTypes.GivenName)?.Value;
+
+    private static string? GetEmail(ClaimsPrincipal user)
+        => user?.FindFirst(ClaimTypes.Email)?.Value
+           ?? user?.FindFirst("email")?.Value;
+
+    private static string GetInitials(string? nameOrEmail)
     {
-        Nav.NavigateTo("/counter");
+        if (string.IsNullOrWhiteSpace(nameOrEmail)) return "U";
+        var parts = nameOrEmail.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 1) return parts[0].Substring(0, 1).ToUpperInvariant();
+        return (parts[0][0].ToString() + parts[^1][0].ToString()).ToUpperInvariant();
     }
 
     private async Task Logout()
     {
-        await Auth.LogoutAsync();
-        Nav.NavigateTo("/login");
+        await AuthState.LogoutAsync();
+        Nav.NavigateTo("/login", true);
+    }
+
+    private async Task HandlePortalSelected(string portalCode)
+    {
+        try
+        {
+            // Find the portal URL from the portals list
+            var portal = portals?.FirstOrDefault(p => p.Code.Equals(portalCode, StringComparison.OrdinalIgnoreCase));
+            if (portal != null)
+            {
+                Nav.NavigateTo(portal.Url);
+            }
+            else
+            {
+                Logger.LogWarning("Portal not found: {PortalCode}", portalCode);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error navigating to portal: {PortalCode}", portalCode);
+        }
     }
 }
